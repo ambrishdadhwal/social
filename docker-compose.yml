@@ -1,0 +1,19 @@
+version: '3'
+services:
+  social:
+    image: social
+    ports:
+    - 9091:9091
+    networks:
+    - social-mysql
+    depends_on:
+    - mysqldb
+  mysqldb:
+    image: mysql
+    networks:
+    - social-mysql
+    environment:
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=social
+networks:
+  kads-mysql: null
