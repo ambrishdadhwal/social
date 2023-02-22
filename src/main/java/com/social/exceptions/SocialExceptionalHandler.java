@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
@@ -30,11 +31,11 @@ public class SocialExceptionalHandler extends ResponseEntityExceptionHandler
 
 		return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
+	
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@Override
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status,
-		WebRequest request)
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatusCode status, WebRequest request) 
 	{
 		List<String> details = new ArrayList<>();
 		for (ObjectError error : ex.getBindingResult().getAllErrors())
@@ -42,7 +43,7 @@ public class SocialExceptionalHandler extends ResponseEntityExceptionHandler
 			details.add(error.getDefaultMessage());
 		}
 		ErrorDetails error = ErrorDetails.builder().timestamp(new Date()).message(request.getDescription(true)).details(ex.getLocalizedMessage()).build();
-		return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(error, status);
 	}
 
 	@ExceptionHandler(
@@ -53,11 +54,10 @@ public class SocialExceptionalHandler extends ResponseEntityExceptionHandler
 	}
 
 	@Override
-	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status,
+	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status,
 		WebRequest request)
 	{
-		List<String> details = new ArrayList<>();
 		ErrorDetails error = ErrorDetails.builder().timestamp(new Date()).message(request.getDescription(false)).details(ex.getMostSpecificCause().getLocalizedMessage()).build();
-		return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(error, status);
 	}
 }

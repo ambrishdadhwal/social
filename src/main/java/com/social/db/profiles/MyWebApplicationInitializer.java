@@ -1,11 +1,11 @@
 package com.social.db.profiles;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.web.WebApplicationInitializer;
+
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
 
 /*
  * Programmatically via WebApplicationInitializer Interface

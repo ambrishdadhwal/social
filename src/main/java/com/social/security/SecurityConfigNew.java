@@ -1,7 +1,5 @@
 package com.social.security;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -21,8 +19,10 @@ import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Configuration
 @EnableWebSecurity
@@ -44,24 +44,26 @@ public class SecurityConfigNew
 	private final String[] PERMITTED_URLS =
 	{	"/resources/**",
 		"/login",
-		"/about"};
+		"/about", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**","/h2-console/**"};
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
 	{
-		http.cors().and().csrf().disable()
-			.authorizeHttpRequests()
-			.antMatchers(PERMITTED_URLS).permitAll()
-			.anyRequest().authenticated()
-			.and()
+		http.cors().and().csrf(csrf -> csrf.disable())
+		.authorizeHttpRequests(auth -> auth.requestMatchers("/h2-console/**").permitAll()
+				.requestMatchers("/v3/api-docs/**").permitAll()
+				.requestMatchers("/swagger-ui.html/**").permitAll()
+				.requestMatchers("/swagger-ui/**").permitAll()
+				.requestMatchers(HttpMethod.POST,"/user/").permitAll()
+				.requestMatchers(HttpMethod.GET,"/actuator/**").permitAll()
+				.anyRequest().authenticated())
 			.httpBasic().authenticationEntryPoint(authenticationEntryPoint)
 			.and()
 			.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
-			.authenticationProvider(authProvider)
+			.authenticationProvider(authProvider);
 			//.addFilterBefore(fbFilter, UsernamePasswordAuthenticationFilter.class)
-			.formLogin();
 
 		return http.build();
 	}
@@ -69,14 +71,13 @@ public class SecurityConfigNew
 	/*
 	 * Ignore swagger & other stuff
 	 * */
-	@Bean
-	public WebSecurityCustomizer webSecurityCustomizer()
-	{
-		return (web -> web.ignoring()
-			.antMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**")
-			.antMatchers("/h2-console/**")
-			.antMatchers(HttpMethod.POST, "/user/**"));
-	}
+	/*
+	 * @Bean public WebSecurityCustomizer webSecurityCustomizer() { return (web ->
+	 * web.ignoring().anyRequest() .requestMatchers("/h2-console/**")
+	 * .requestMatchers("/v3/api-docs/**") .requestMatchers("/swagger-ui.html")
+	 * .requestMatchers("/swagger-ui/**") .requestMatchers("/h2-console/**")
+	 * .requestMatchers(HttpMethod.POST, "/user/**")); }
+	 */
 
 	// custom request matcher
 	public class MyCustomRequestMatcher implements RequestMatcher

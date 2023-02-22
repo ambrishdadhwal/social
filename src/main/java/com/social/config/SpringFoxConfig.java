@@ -12,7 +12,7 @@ import io.swagger.v3.oas.models.info.License;
 public class SpringFoxConfig
 {
 
-	@Bean()
+	@Bean
 	public OpenAPI springShopOpenAPI()
 	{
 		return new OpenAPI()

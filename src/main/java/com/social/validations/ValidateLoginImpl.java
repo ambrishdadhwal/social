@@ -1,9 +1,9 @@
 package com.social.validations;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
 import com.social.dto.SocialLoginDTO;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class ValidateLoginImpl implements ConstraintValidator<ValidateLogin, SocialLoginDTO>
 {
