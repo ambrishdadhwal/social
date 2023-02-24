@@ -17,7 +17,7 @@ public class AuthenticationEvents
 	@Autowired
 	SocialNotificationService emailService;
 
-	@Value("${spring.mail.username}")
+	@Value("${notificaion.email}")
 	String userName;
 
 	@EventListener
@@ -37,7 +37,7 @@ public class AuthenticationEvents
 	public void onFailure(AbstractAuthenticationFailureEvent failures)
 	{
 		SocialNotificationDetails emailDetails = SocialNotificationDetails.builder()
-			.recipient(userName)
+			.recipient("ammydev321@gmail.com")
 			.subject("Login Failure")
 			.msgBody("Login Failed for application. Try with valid credentials.")
 			.build();
