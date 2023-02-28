@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import com.social.profile.dto.ProfileDTO;
 
+import com.social.presentation.ProfileDTO;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

@@ -1,11 +1,10 @@
 package com.social.profile.controllers;
 
-import java.util.Optional;
 
-import com.social.profile.domain.Profile;
-import com.social.profile.dto.ProfileLoginDTO;
-import com.social.profile.dto.ProfileDTO;
-import com.social.profile.mapper.ProfileMapper;
+import com.social.commonutils.ProfileMapper;
+import com.social.domain.Profile;
+import com.social.presentation.ProfileDTO;
+import com.social.presentation.ProfileLoginDTO;
 import com.social.profile.service.IProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/login")

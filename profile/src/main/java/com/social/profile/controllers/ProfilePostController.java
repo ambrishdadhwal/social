@@ -2,7 +2,7 @@ package com.social.profile.controllers;
 
 import java.util.List;
 
-import com.social.profile.dto.ProfilePostDTO;
+import com.social.presentation.ProfilePostDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

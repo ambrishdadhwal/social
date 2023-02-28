@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.social.commonutils.ProfileMapper;
+import com.social.domain.Profile;
+import com.social.entity.ProfileE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.social.profile.domain.Profile;
-import com.social.profile.entity.ProfileE;
-import com.social.profile.mapper.ProfileMapper;
 import com.social.profile.repo.ProfileRepo;
 import com.social.profile.repo.IProfileRepo;
 import com.social.profile.repo.IProfileRoleRepo;
