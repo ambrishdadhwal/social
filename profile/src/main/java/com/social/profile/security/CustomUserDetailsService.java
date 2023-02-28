@@ -1,7 +1,7 @@
 package com.social.profile.security;
 
-import java.util.List;
 
+import com.social.domain.Profile;
 import com.social.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.social.profile.domain.Profile;
+import java.util.List;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService

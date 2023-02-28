@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.social.profile.domain.Profile;
-import com.social.profile.dto.ProfileDTO;
-import com.social.profile.mapper.ProfileMapper;
+import com.social.commonutils.ProfileMapper;
+import com.social.domain.Profile;
+import com.social.presentation.ProfileDTO;
 import com.social.profile.service.IProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

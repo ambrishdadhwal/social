@@ -2,7 +2,7 @@ package com.social.profile;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.social.profile.domain.Profile;
+import com.social.domain.Profile;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +26,7 @@ class ProfileApplicationTest
 	}
 
 	@Test
-	public void whenCreateNewBook_thenCreated()
+	void whenCreateNewBook_thenCreated()
 	{
 		Profile book = createFBUser();
 		Response response = RestAssured.given()
@@ -56,7 +56,7 @@ class ProfileApplicationTest
 			.firstName("Test")
 			.lastName("Test")
 			.email("test@test.com")
-			.id(1l)
+			.id(1L)
 			.build();
 	}
 

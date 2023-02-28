@@ -8,8 +8,8 @@ import java.util.Optional;
 
 import javax.sql.DataSource;
 
-import com.social.profile.common.Country;
-import com.social.profile.domain.Profile;
+import com.social.domain.Country;
+import com.social.domain.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

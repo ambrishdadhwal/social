@@ -1,0 +1,28 @@
+version: '3'
+services:
+  eureka-server:
+    build: eurekaserver
+    mem_limit: 512M
+    ports:
+      - "8761:8761"
+  configserver:
+    build: configserver
+    mem_limit: 512M
+    ports:
+      - "9093:9093"
+  profile:
+    build: profile
+    mem_limit: 512M
+    ports:
+      - "9091:9091"
+  dashboard:
+    build: dashboard
+    mem_limit: 512M
+    ports:
+      - "9092:9092"
+    links:
+      - counterservice:counterservice
+      - registryservice:registryservice
+    depends_on:
+      - counterservice
+      - registryservice

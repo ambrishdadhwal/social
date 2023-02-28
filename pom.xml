@@ -22,9 +22,14 @@
     </properties>
 
     <modules>
-        <module>profile</module>
-        <module>dashboard</module>
+        <module>common-utils</module>
+        <module>presentation-layer</module>
+        <module>domain-layer</module>
+        <module>entity-layer</module>
         <module>eureka-server</module>
+        <module>dashboard</module>
+        <module>profile</module>
+
     </modules>
 
     <dependencies>
