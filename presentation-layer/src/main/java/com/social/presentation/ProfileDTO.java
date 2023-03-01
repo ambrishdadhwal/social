@@ -41,7 +41,7 @@ public class ProfileDTO
 	private String password;
 
 	@CountryValidator
-	private CountryDTO countryDTO;
+	private CountryDTO country;
 
 	// @DOBValidator
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

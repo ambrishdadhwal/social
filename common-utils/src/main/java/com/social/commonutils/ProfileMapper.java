@@ -77,7 +77,7 @@ public class ProfileMapper
 			.lastName(from.getLastName())
 			.email(from.getEmail())
 			.password(from.getPassword())
-			.country(Country.getCountry(from.getCountryDTO().getCountry()))
+			.country(Country.getCountry(from.getCountry().getCountry()))
 			.dob(from.getDob())
 			.roles(roles)
 			.build();
@@ -95,7 +95,7 @@ public class ProfileMapper
 			.lastName(from.getLastName())
 			.email(from.getEmail())
 			.password(from.getPassword())
-			.countryDTO(CountryDTO.getCountry(from.getCountry().getCountry()))
+			.country(CountryDTO.getCountry(from.getCountry().getCountry()))
 			.dob(from.getDob())
 			.roles(from.getRoles())
 			.build();
