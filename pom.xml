@@ -22,6 +22,7 @@
     </properties>
 
     <modules>
+        <module>config-server</module>
         <module>repository-layer</module>
         <module>service-layer</module>
         <module>common-utils</module>

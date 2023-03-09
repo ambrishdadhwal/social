@@ -14,6 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import validation.CountryValidator;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -47,7 +48,13 @@ public class ProfileDTO
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	@JsonFormat(pattern = "MM/dd/yyyy")
 	private LocalDate dob;
+
+	private Boolean isActive;
 	
 	private Set<String> roles;
+
+	private LocalDateTime createDateTime;
+
+	private LocalDateTime modifyDateTime;
 
 }

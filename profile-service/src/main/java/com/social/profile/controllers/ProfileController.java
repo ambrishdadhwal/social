@@ -1,26 +1,21 @@
 package com.social.profile.controllers;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import com.social.commonutils.ProfileMapper;
 import com.social.domain.Profile;
 import com.social.presentation.ProfileDTO;
+import com.social.profile.datastore.ProfileDataStore;
 import com.social.service.IProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.social.profile.datastore.ProfileDataStore;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
@@ -37,10 +32,17 @@ public class ProfileController
 		return new ResponseEntity<>(users.stream().map(ProfileMapper::convertDTO).collect(Collectors.toList()), HttpStatus.OK);
 	}
 
+
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<ProfileDTO> getUserById(@PathVariable String id)
+	public ResponseEntity<ProfileDTO> getUserById(@PathVariable(required = true) Long id)
 	{
-		return new ResponseEntity<>(null, HttpStatus.OK);
+		//only login user can access their own data
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		Optional<Profile> profile = profileService.getUserbyUserNameAndId(authentication.getName(), id);
+
+		return profile.map(value -> new ResponseEntity(value, HttpStatus.OK))
+				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
 	@GetMapping(value = "/count")
@@ -55,12 +57,9 @@ public class ProfileController
 		ProfileDataStore.addUser(user);
 
 		Optional<Profile> newUser = profileService.saveUser(ProfileMapper.convert(user));
-		if (newUser.isPresent())
-		{
-			return new ResponseEntity<>(ProfileMapper.convertDTO(newUser.get()), HttpStatus.OK);
-		}
+		return newUser.map(profile -> new ResponseEntity<>(ProfileMapper.convertDTO(profile), HttpStatus.OK))
+				.orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
 
-		return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
 
 	@DeleteMapping(value = "/{id}")

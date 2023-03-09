@@ -65,6 +65,18 @@ public class ProfileService implements IProfileService
 		return userRepo.findAll().stream().map(ProfileMapper::convert).collect(Collectors.toList());
 	}
 
+	public Optional<Profile> getUserbyId(Long userId)
+	{
+		return allUsers().stream().filter(n->n.getId().equals(userId)).findAny();
+	}
+
+	@Override
+	public Optional<Profile> getUserbyUserNameAndId(String userName, Long userId) {
+		return allUsers().stream()
+				.filter(n->n.getEmail().equals(userName) && n.getId().equals(userId))
+				.findAny();
+	}
+
 	public long totalSocialUsers()
 	{
 		return profileRepo.totalUsers();

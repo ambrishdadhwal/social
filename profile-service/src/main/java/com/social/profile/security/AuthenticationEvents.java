@@ -29,8 +29,15 @@ public class AuthenticationEvents
 			.msgBody("Login Succeed for application.")
 			.build();
 
-		emailService.sendSimpleMail(emailDetails);
-		System.out.println("###...success event is published...###" + success.getTimestamp());
+		try {
+			//emailService.sendSimpleMail(emailDetails);
+			System.out.println("###...success event is published...###" + success.getTimestamp());
+		}
+		catch (Exception e)
+		{
+
+		}
+
 	}
 
 	@EventListener
@@ -42,7 +49,13 @@ public class AuthenticationEvents
 			.msgBody("Login Failed for application. Try with valid credentials.")
 			.build();
 
-		emailService.sendSimpleMail(emailDetails);
-		System.out.println("###...onFailure event is published...###" + failures.getTimestamp());
+		try {
+		//	emailService.sendSimpleMail(emailDetails);
+			System.out.println("###...onFailure event is published...###" + failures.getTimestamp());
+	}
+		catch (Exception e)
+	{
+
+	}
 	}
 }

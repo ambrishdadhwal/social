@@ -25,4 +25,7 @@ public interface IProfileService
 
 	public Optional<Profile> getUser(Profile user);
 
+	public Optional<Profile> getUserbyId(Long userId);
+
+	public Optional<Profile> getUserbyUserNameAndId(String userName, Long userId);
 }

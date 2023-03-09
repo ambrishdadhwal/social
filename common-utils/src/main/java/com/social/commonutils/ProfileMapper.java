@@ -32,6 +32,9 @@ public class ProfileMapper
 			.country(from.getCountry())
 			.dob(from.getDob())
 			.roles(from.getUserRoles().stream().map(ProfileRoleE::getRole).collect(Collectors.toSet()))
+			.createDateTime(from.getCreateDateTime())
+			.modifiedDateTime(from.getModifiedDateTime())
+			.isActive(from.getIsActive())
 			.build();
 	}
 
@@ -57,6 +60,9 @@ public class ProfileMapper
 			.country(from.getCountry())
 			.dob(from.getDob())
 			.userRoles(roles)
+			.createDateTime(from.getCreateDateTime())
+			.modifiedDateTime(from.getModifiedDateTime())
+			.isActive(from.getIsActive())
 			.build();
 	}
 
@@ -80,6 +86,9 @@ public class ProfileMapper
 			.country(Country.getCountry(from.getCountry().getCountry()))
 			.dob(from.getDob())
 			.roles(roles)
+			.createDateTime(from.getCreateDateTime())
+			.modifiedDateTime(from.getModifyDateTime())
+			.isActive(from.getIsActive())
 			.build();
 	}
 
@@ -98,6 +107,9 @@ public class ProfileMapper
 			.country(CountryDTO.getCountry(from.getCountry().getCountry()))
 			.dob(from.getDob())
 			.roles(from.getRoles())
+			.createDateTime(from.getCreateDateTime())
+			.modifyDateTime(from.getModifiedDateTime())
+			.isActive(from.getIsActive())
 			.build();
 	}
 
