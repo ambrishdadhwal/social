@@ -1,19 +1,39 @@
 version: '3'
 services:
-  social:
-    image: social
-    ports:
-    - 9091:9091
-    networks:
-    - social-mysql
+  config-server:
     depends_on:
-    - mysqldb
-  mysqldb:
-    image: mysql
-    networks:
-    - social-mysql
+      - eureka-server
+    image: social-config-server-service
+    container_name: social-config-server
     environment:
-    - MYSQL_ROOT_PASSWORD=root
-    - MYSQL_DATABASE=social
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka
+    restart: on-failure
+    ports:
+    - 9093:9093
+    networks:
+    - social-network
+  eureka-server:
+    image: social-eureka-server-service
+    container_name: eureka-server
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka
+    restart: on-failure
+    ports:
+      - 8761:8761
+    networks:
+      - social-network
+  social:
+    depends_on:
+      - eureka-server
+    image: social-profile-service
+    container_name: social-profile-service
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka
+    restart: on-failure
+    ports:
+      - 9091:9091
+    networks:
+      - social-network
 networks:
-  kads-mysql: null
+  social-network:
+    driver: bridge

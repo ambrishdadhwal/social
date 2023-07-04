@@ -44,26 +44,26 @@
             <artifactId>service-layer</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-       <!-- <dependency>
-            <groupId>com.social</groupId>
-            <artifactId>common-utils</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.social</groupId>
-            <artifactId>presentation-layer</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.social</groupId>
-            <artifactId>domain-layer</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.social</groupId>
-            <artifactId>entity-layer</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>-->
+        <!-- <dependency>
+             <groupId>com.social</groupId>
+             <artifactId>common-utils</artifactId>
+             <version>0.0.1-SNAPSHOT</version>
+         </dependency>
+         <dependency>
+             <groupId>com.social</groupId>
+             <artifactId>presentation-layer</artifactId>
+             <version>0.0.1-SNAPSHOT</version>
+         </dependency>
+         <dependency>
+             <groupId>com.social</groupId>
+             <artifactId>domain-layer</artifactId>
+             <version>0.0.1-SNAPSHOT</version>
+         </dependency>
+         <dependency>
+             <groupId>com.social</groupId>
+             <artifactId>entity-layer</artifactId>
+             <version>0.0.1-SNAPSHOT</version>
+         </dependency>-->
         <dependency>
             <groupId>com.social</groupId>
             <artifactId>notification-service</artifactId>
@@ -92,4 +92,24 @@
             </snapshots>
         </repository>
     </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.social.profile.SocialApplication</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
