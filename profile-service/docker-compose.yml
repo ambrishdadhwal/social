@@ -37,3 +37,5 @@ services:
 networks:
   social-network:
     driver: bridge
+
+#https://stackoverflow.com/questions/72421740/spring-micro-services-eureka-client-is-not-registering-with-eureka-server
