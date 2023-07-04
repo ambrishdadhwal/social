@@ -1,4 +1,4 @@
-package com.social.profile.eurekaserver;
+package com.social.eurekaserver;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
