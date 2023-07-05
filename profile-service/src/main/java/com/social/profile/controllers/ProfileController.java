@@ -63,8 +63,9 @@ public class ProfileController
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<ProfileDTO> deleteUser(@PathVariable String id)
+	public ResponseEntity<ProfileDTO> deleteUser(@PathVariable Long id)
 	{
+		profileService.deleteUserById(id);
 		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 	}
 

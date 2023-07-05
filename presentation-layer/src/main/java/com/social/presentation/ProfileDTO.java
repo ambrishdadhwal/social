@@ -49,6 +49,10 @@ public class ProfileDTO
 	@JsonFormat(pattern = "MM/dd/yyyy")
 	private LocalDate dob;
 
+	private String profileImage;
+
+	private Set<ProfileImageDTO> profileImages;
+
 	private Boolean isActive;
 	
 	private Set<String> roles;

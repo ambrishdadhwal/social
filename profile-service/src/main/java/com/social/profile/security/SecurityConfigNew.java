@@ -10,14 +10,18 @@ import org.springframework.security.authentication.DefaultAuthenticationEventPub
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.authorization.AuthorizationEventPublisher;
 import org.springframework.security.authorization.SpringAuthorizationEventPublisher;
+import org.springframework.security.config.annotation.SecurityBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,11 +52,14 @@ public class SecurityConfigNew
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
 	{
 		http.cors().and().csrf(csrf -> csrf.disable())
-		.authorizeHttpRequests(auth -> auth.requestMatchers("/h2-console/**").permitAll()
+				.headers().disable()
+		.authorizeHttpRequests(auth -> auth.requestMatchers("/h2-console**").permitAll()
+				.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
 				.requestMatchers("/v3/api-docs/**").permitAll()
 				.requestMatchers("/swagger-ui.html/**").permitAll()
 				.requestMatchers("/swagger-ui/**").permitAll()
 				.requestMatchers(HttpMethod.POST,"/user/").permitAll()
+				.requestMatchers(HttpMethod.POST,"/login/").permitAll()
 				.requestMatchers(HttpMethod.GET,"/actuator/**").permitAll()
 				.anyRequest().authenticated())
 			.httpBasic().authenticationEntryPoint(authenticationEntryPoint)

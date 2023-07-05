@@ -3,7 +3,9 @@ package com.social.service;
 import com.social.commonutils.ProfileMapper;
 import com.social.domain.Profile;
 import com.social.entity.ProfileE;
+import com.social.entity.ProfileImageE;
 import com.social.repository.IProfileRoleRepo;
+import com.social.repository.ProfileImageRepo;
 import com.social.repository.ProfileRepo;
 import com.social.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service("profileService")
@@ -27,6 +30,9 @@ public class ProfileService implements IProfileService
 	
 	@Autowired
 	IProfileRoleRepo fUserRoleRepo;
+
+	@Autowired
+    ProfileImageRepo userImageRepo;
 
 	public Optional<Profile> saveUser(Profile user)
 	{
@@ -77,6 +83,13 @@ public class ProfileService implements IProfileService
 				.findAny();
 	}
 
+	@Override
+	public Optional<Profile> deleteUserById(Long userId) {
+		Optional<Profile> user = allUsers().stream().filter(n->n.getId().equals(userId)).findAny();
+		userRepo.deleteById(userId);
+		return user;
+	}
+
 	public long totalSocialUsers()
 	{
 		return profileRepo.totalUsers();
@@ -86,6 +99,22 @@ public class ProfileService implements IProfileService
 	public Optional<Profile> getUser(Profile user)
 	{
 		return profileRepo.getUser(user);
+	}
+
+	@Override
+	public Optional<Profile> updateUser(Profile user) {
+		ProfileE existingUser = ProfileMapper.convert(user);
+		existingUser.setModifiedDateTime(LocalDateTime.now());
+		ProfileE savedUser = userRepo.save(existingUser);
+
+        Set<ProfileImageE> userProfileImages = existingUser.getProfileImages();
+        userProfileImages.forEach(m->{
+            m.setUserId(savedUser);
+        });
+
+        userImageRepo.saveAll(userProfileImages);
+
+		return  Optional.of(ProfileMapper.convert(savedUser));
 	}
 
 }

@@ -38,6 +38,13 @@ public class ProfileE {
 	private String password;
 
 	@Column
+	private String profileImage;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_a_id", referencedColumnName = "id")
+	private Set<ProfileImageE> profileImages;
+
+	@Column
 	private Boolean isActive;
 
 	@Column

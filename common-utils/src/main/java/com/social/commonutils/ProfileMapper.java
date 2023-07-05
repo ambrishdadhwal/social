@@ -2,10 +2,13 @@ package com.social.commonutils;
 
 import com.social.domain.Country;
 import com.social.domain.Profile;
+import com.social.domain.ProfileImage;
 import com.social.entity.ProfileE;
+import com.social.entity.ProfileImageE;
 import com.social.entity.ProfileRoleE;
 import com.social.presentation.CountryDTO;
 import com.social.presentation.ProfileDTO;
+import com.social.presentation.ProfileImageDTO;
 import com.social.presentation.ProfileLoginDTO;
 import lombok.experimental.UtilityClass;
 
@@ -23,6 +26,21 @@ public class ProfileMapper
 		{
 			return null;
 		}
+
+		Set<ProfileImage> images = null;
+
+		if( from.getProfileImages() != null) {
+			images = from.getProfileImages().stream().map(n->{
+				ProfileImage profile = ProfileImage.builder()
+						.id(n.getId())
+						.imageName(n.getImageName())
+						.imageDescription(n.getImageDescription())
+						.image(n.getImage())
+						.build();
+				return profile;
+			}).collect(Collectors.toSet());
+		}
+
 		return Profile.builder()
 			.id(from.getId())
 			.firstName(from.getFirstName())
@@ -31,6 +49,8 @@ public class ProfileMapper
 			.password(from.getPassword())
 			.country(from.getCountry())
 			.dob(from.getDob())
+			.profileImage(from.getProfileImage())
+			.profileImages(images)
 			.roles(from.getUserRoles().stream().map(ProfileRoleE::getRole).collect(Collectors.toSet()))
 			.createDateTime(from.getCreateDateTime())
 			.modifiedDateTime(from.getModifiedDateTime())
@@ -51,6 +71,20 @@ public class ProfileMapper
 			roles.add(ProfileRoleE.builder().role(n).build());
 		});
 
+		Set<ProfileImageE> images = null;
+
+		if( from.getProfileImages() != null) {
+			images = from.getProfileImages().stream().map(n->{
+				ProfileImageE profile = ProfileImageE.builder()
+						.id(n.getId())
+						.imageName(n.getImageName())
+						.imageDescription(n.getImageDescription())
+						.image(n.getImage())
+						.build();
+				return profile;
+			}).collect(Collectors.toSet());
+		}
+
 		return ProfileE.builder()
 			.id(from.getId())
 			.firstName(from.getFirstName())
@@ -60,6 +94,8 @@ public class ProfileMapper
 			.country(from.getCountry())
 			.dob(from.getDob())
 			.userRoles(roles)
+			.profileImage(from.getProfileImage())
+			.profileImages(images)
 			.createDateTime(from.getCreateDateTime())
 			.modifiedDateTime(from.getModifiedDateTime())
 			.isActive(from.getIsActive())
@@ -77,6 +113,20 @@ public class ProfileMapper
 		roles.add("ADMIN");
 		roles.add("USER");
 
+		Set<ProfileImage> images = null;
+
+		if( from.getProfileImages() != null) {
+			images = from.getProfileImages().stream().map(n -> {
+				ProfileImage profile = ProfileImage.builder()
+						.id(n.getId())
+						.imageName(n.getImageName())
+						.imageDescription(n.getImageDescription())
+						.image(n.getImage())
+						.build();
+				return profile;
+			}).collect(Collectors.toSet());
+		}
+
 		return Profile.builder()
 			.id(from.getId())
 			.firstName(from.getFirstName())
@@ -86,6 +136,8 @@ public class ProfileMapper
 			.country(Country.getCountry(from.getCountry().getCountry()))
 			.dob(from.getDob())
 			.roles(roles)
+			.profileImage(from.getProfileImage())
+			.profileImages(images)
 			.createDateTime(from.getCreateDateTime())
 			.modifiedDateTime(from.getModifyDateTime())
 			.isActive(from.getIsActive())
@@ -98,6 +150,20 @@ public class ProfileMapper
 		{
 			return null;
 		}
+		Set<ProfileImageDTO> images = null;
+
+		if( from.getProfileImages() != null) {
+			images = from.getProfileImages().stream().map(n->{
+				ProfileImageDTO profile = ProfileImageDTO.builder()
+						.id(n.getId())
+						.imageName(n.getImageName())
+						.imageDescription(n.getImageDescription())
+						.image(n.getImage())
+						.build();
+				return profile;
+			}).collect(Collectors.toSet());
+		}
+
 		return ProfileDTO.builder()
 			.id(from.getId())
 			.firstName(from.getFirstName())
@@ -107,6 +173,8 @@ public class ProfileMapper
 			.country(CountryDTO.getCountry(from.getCountry().getCountry()))
 			.dob(from.getDob())
 			.roles(from.getRoles())
+			.profileImage(from.getProfileImage())
+			.profileImages(images)
 			.createDateTime(from.getCreateDateTime())
 			.modifyDateTime(from.getModifiedDateTime())
 			.isActive(from.getIsActive())

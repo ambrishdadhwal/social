@@ -28,6 +28,8 @@ public class Profile
 	private LocalDate dob;
 	private Boolean isActive;
 	private Set<String> roles;
+	private String profileImage;
+	private Set<ProfileImage> profileImages;
 	private LocalDateTime createDateTime;
 	private LocalDateTime modifiedDateTime;
 
