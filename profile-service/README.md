@@ -1,4 +1,4 @@
-# Social
+## Social
 
 
 
@@ -14,6 +14,12 @@ Social is networking app where you can connect with your friends, make post, lik
 
 
 ## Integrate with your tools
+Integrate Redis with Spring boot steps :
+1. Add dependency to pom.xml
+2. add redis configuration to application.properties
+3. Install Redis . Follow here "https://developer.redis.com/create/windows/"
+4. Download RedisInsight 
+5. Add host as localhost & port as 6379
 
 
 

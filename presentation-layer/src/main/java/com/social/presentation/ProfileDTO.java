@@ -2,13 +2,16 @@ package com.social.presentation;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 import validation.CountryValidator;
@@ -23,6 +26,7 @@ import java.util.Set;
 @NoArgsConstructor
 @SuperBuilder
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@Data
 public class ProfileDTO
 {
 
@@ -45,8 +49,10 @@ public class ProfileDTO
 	private CountryDTO country;
 
 	// @DOBValidator
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	@JsonFormat(pattern = "MM/dd/yyyy")
+
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate dob;
 
 	private String profileImage;
@@ -57,8 +63,14 @@ public class ProfileDTO
 	
 	private Set<String> roles;
 
+	@JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	private LocalDateTime createDateTime;
 
+	@JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	private LocalDateTime modifyDateTime;
 
 }
