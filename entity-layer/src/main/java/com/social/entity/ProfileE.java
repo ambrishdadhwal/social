@@ -59,8 +59,8 @@ public class ProfileE {
 	private Set<ProfileRoleE> userRoles;
 
 	@Column
-	private LocalDateTime createDateTime;
+	private LocalDate createDateTime;
 
 	@Column
-	private LocalDateTime modifiedDateTime;
+	private LocalDate modifiedDateTime;
 }

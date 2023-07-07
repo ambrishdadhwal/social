@@ -18,6 +18,8 @@ Integrate Redis with Spring boot steps :
 1. Add dependency to pom.xml
 2. add redis configuration to application.properties
 3. Install Redis . Follow here "https://developer.redis.com/create/windows/"
+ sudo service redis-server start
+    ps -ef|grep redis
 4. Download RedisInsight 
 5. Add host as localhost & port as 6379
 

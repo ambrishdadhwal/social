@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -37,8 +38,8 @@ public class ProfileService implements IProfileService
 	public Optional<Profile> saveUser(Profile user)
 	{
 		ProfileE newUser = ProfileMapper.convert(user);
-		newUser.setCreateDateTime(LocalDateTime.now());
-		newUser.setModifiedDateTime(LocalDateTime.now());
+		newUser.setCreateDateTime(LocalDate.now());
+		newUser.setModifiedDateTime(LocalDate.now());
 		newUser.setIsActive(true);
 		ProfileE savedUser = userRepo.save(newUser);
 
@@ -104,7 +105,7 @@ public class ProfileService implements IProfileService
 	@Override
 	public Optional<Profile> updateUser(Profile user) {
 		ProfileE existingUser = ProfileMapper.convert(user);
-		existingUser.setModifiedDateTime(LocalDateTime.now());
+		existingUser.setModifiedDateTime(LocalDate.now());
 		ProfileE savedUser = userRepo.save(existingUser);
 
         Set<ProfileImageE> userProfileImages = existingUser.getProfileImages();

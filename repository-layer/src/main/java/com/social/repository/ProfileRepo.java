@@ -67,8 +67,8 @@ public class ProfileRepo
 					.email(rs.getString("email"))
 					.firstName(rs.getString("first_name"))
 					.lastName(rs.getString("last_name"))
-					.createDateTime(rs.getTimestamp("create_date_time").toLocalDateTime())
-					.modifiedDateTime(rs.getTimestamp("modified_date_time").toLocalDateTime())
+					.createDateTime(rs.getDate("create_date_time").toLocalDate())
+					.modifiedDateTime(rs.getDate("modified_date_time").toLocalDate())
 					.dob(rs.getDate("dob").toLocalDate())
 					.isActive(rs.getBoolean("is_active"))
 					.build();

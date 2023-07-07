@@ -2,6 +2,7 @@ package com.social.profile.controllers;
 
 import com.social.commonutils.ProfileMapper;
 import com.social.domain.Profile;
+import com.social.presentation.CommonResponse;
 import com.social.presentation.ProfileDTO;
 import com.social.profile.datastore.ProfileDataStore;
 import com.social.service.IProfileService;
@@ -26,24 +27,29 @@ public class ProfileController
 	@Autowired(required = true)
 	IProfileService profileService;
 
+    @Cacheable(value = "data", key = "'all-users'")
 	@GetMapping(value = "/", consumes = "application/json", produces = "application/json")
-	public ResponseEntity<List<ProfileDTO>> getUsers()
+	public CommonResponse<List<ProfileDTO>> getUsers()
 	{
 		List<Profile> users = profileService.allUsers();
-		return new ResponseEntity<>(users.stream().map(ProfileMapper::convertDTO).collect(Collectors.toList()), HttpStatus.OK);
+        CommonResponse<List<ProfileDTO>> dto = new CommonResponse<List<ProfileDTO>>();
+        dto.setData(users.stream().map(ProfileMapper::convertDTO).collect(Collectors.toList()));
+		dto.setStatus(HttpStatus.OK);
+		return dto;
 	}
 
-
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<ProfileDTO> getUserById(@PathVariable(required = true) Long id)
+	@Cacheable(value = "data", key = "'users' + '-' + #id")
+	public CommonResponse<ProfileDTO> getUserById(@PathVariable(required = true) Long id)
 	{
 		//only login user can access their own data
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		Optional<Profile> profile = profileService.getUserbyUserNameAndId(authentication.getName(), id);
+		CommonResponse<ProfileDTO> dto = new CommonResponse<>();
+		dto.setData(ProfileMapper.convertDTO(profile.get()));
 
-		return profile.map(value -> new ResponseEntity(value, HttpStatus.OK))
-				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+		return dto;
 	}
 
 	@GetMapping(value = "/count")
@@ -52,16 +58,16 @@ public class ProfileController
 		return new ResponseEntity<>(profileService.totalSocialUsers(), HttpStatus.OK);
 	}
 
-	@Cacheable(value = "users", key = "#user")
+	@Cacheable(value = "data", key = "#user")
 	@PostMapping(value = "/", consumes = "application/json", produces = "application/json")
-	public ResponseEntity<ProfileDTO> createUser(@RequestBody @Validated ProfileDTO user)
+	public ResponseEntity<CommonResponse> createUser(@RequestBody @Validated ProfileDTO user)
 	{
 		ProfileDataStore.addUser(user);
+        Optional<Profile> newUser = profileService.saveUser(ProfileMapper.convert(user));
+        CommonResponse<ProfileDTO> dto = new CommonResponse<>();
+        dto.setData(ProfileMapper.convertDTO(newUser.get()));
 
-		Optional<Profile> newUser = profileService.saveUser(ProfileMapper.convert(user));
-		return newUser.map(profile -> new ResponseEntity<>(ProfileMapper.convertDTO(profile), HttpStatus.OK))
-				.orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
-
+		 return new ResponseEntity<>( dto, HttpStatus.OK);
 	}
 
 	@DeleteMapping(value = "/{id}")

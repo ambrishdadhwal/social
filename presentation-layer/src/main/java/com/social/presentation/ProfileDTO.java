@@ -1,6 +1,7 @@
 package com.social.presentation;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -18,6 +19,7 @@ import validation.CountryValidator;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 @Getter
@@ -50,7 +52,6 @@ public class ProfileDTO
 
 	// @DOBValidator
 	@JsonFormat(pattern = "MM/dd/yyyy")
-
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate dob;
@@ -63,14 +64,14 @@ public class ProfileDTO
 	
 	private Set<String> roles;
 
-	@JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	private LocalDateTime createDateTime;
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(pattern = "MM/dd/yyyy")
+    private LocalDate createDateTime;
 
-	@JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	private LocalDateTime modifyDateTime;
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(pattern = "MM/dd/yyyy")
+    private LocalDate modifyDateTime;
 
 }

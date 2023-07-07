@@ -30,7 +30,7 @@ public class Profile
 	private Set<String> roles;
 	private String profileImage;
 	private Set<ProfileImage> profileImages;
-	private LocalDateTime createDateTime;
-	private LocalDateTime modifiedDateTime;
+	private LocalDate createDateTime;
+	private LocalDate modifiedDateTime;
 
 }
