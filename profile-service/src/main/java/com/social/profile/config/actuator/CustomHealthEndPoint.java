@@ -1,4 +1,4 @@
-package com.social.profile.config;
+package com.social.profile.config.actuator;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

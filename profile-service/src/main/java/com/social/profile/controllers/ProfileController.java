@@ -7,6 +7,7 @@ import com.social.presentation.ProfileDTO;
 import com.social.profile.datastore.ProfileDataStore;
 import com.social.service.IProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
+@CacheConfig(cacheManager = "cacheManager", cacheNames = "data")
 public class ProfileController
 {
 
@@ -58,7 +60,7 @@ public class ProfileController
 		return new ResponseEntity<>(profileService.totalSocialUsers(), HttpStatus.OK);
 	}
 
-	@Cacheable(value = "data", key = "#user")
+	@Cacheable(value = "data", key = "#user.firstName")
 	@PostMapping(value = "/", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<CommonResponse> createUser(@RequestBody @Validated ProfileDTO user)
 	{

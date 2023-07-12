@@ -1,5 +1,7 @@
 package com.social.domain;
 
+import java.util.List;
+
 public enum Country
 {
 

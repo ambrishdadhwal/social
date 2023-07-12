@@ -1,5 +1,6 @@
-package com.social.profile.config;
+package com.social.profile.config.swagger;
 
+import com.social.profile.config.TurnOnOff;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
