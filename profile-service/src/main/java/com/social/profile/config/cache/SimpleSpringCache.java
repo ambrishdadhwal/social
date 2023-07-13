@@ -23,7 +23,7 @@ import java.util.List;
 @Configuration
 @ConditionalOnProperty(name = "cache.simple.enable", havingValue = "true")
 @ConditionalOnMissingBean(name = "cacheManager")
-public class SpringCache {
+public class SimpleSpringCache {
 
     @Bean
     public CacheManager cacheManager() {

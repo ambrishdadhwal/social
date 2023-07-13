@@ -3,6 +3,8 @@ package com.social.profile.config.cache;
 import com.social.domain.Country;
 import com.social.presentation.ProfileDTO;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,9 @@ import org.springframework.stereotype.Component;
  */
 @CacheConfig(cacheManager = "cacheManager", cacheNames = "data")
 public class CacheService {
+
+    @Autowired
+    CacheManager cacheManager;
 
     @Cacheable(key = "'person'")
     public ProfileDTO addPersonToSpringCache()
@@ -71,5 +76,12 @@ public class CacheService {
                 .lastName("Dadhwal")
                 .email(email)
                 .build();
+    }
+
+    public void clearRedisCache()
+    {
+        cacheManager.getCacheNames()
+                .parallelStream()
+                .forEach(n -> cacheManager.getCache(n).clear());
     }
 }
