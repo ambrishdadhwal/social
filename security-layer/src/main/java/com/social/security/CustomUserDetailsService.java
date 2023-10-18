@@ -1,4 +1,4 @@
-package com.social.profile.security;
+package com.social.security;
 
 
 import com.social.domain.Profile;

@@ -1,4 +1,4 @@
-package com.social.profile.security;
+package com.social.security;
 /*package com.social.security;
 
 import org.springframework.context.annotation.Configuration;

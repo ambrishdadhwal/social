@@ -60,7 +60,7 @@ public class ProfileController
 		return new ResponseEntity<>(profileService.totalSocialUsers(), HttpStatus.OK);
 	}
 
-	@Cacheable(value = "data", key = "#user.firstName")
+	@Cacheable(value = "data", key = "#user.email")
 	@PostMapping(value = "/", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<CommonResponse> createUser(@RequestBody @Validated ProfileDTO user)
 	{

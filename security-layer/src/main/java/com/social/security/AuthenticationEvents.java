@@ -1,13 +1,14 @@
-package com.social.profile.security;
+package com.social.security;
 
-import com.social.notification.ProfileNotificationDetails;
-import com.social.notification.ProfileNotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AbstractAuthenticationFailureEvent;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.stereotype.Component;
+
+import com.social.notification.ProfileNotificationDetails;
+import com.social.notification.ProfileNotificationService;
 
 
 @Component

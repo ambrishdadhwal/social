@@ -19,10 +19,6 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
@@ -40,7 +36,12 @@
             <artifactId>service-layer</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!-- <dependency>
+		<dependency>
+			<groupId>com.social</groupId>
+			<artifactId>security-layer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- <dependency>
              <groupId>com.social</groupId>
              <artifactId>common-utils</artifactId>
              <version>0.0.1-SNAPSHOT</version>
@@ -60,12 +61,6 @@
              <artifactId>entity-layer</artifactId>
              <version>0.0.1-SNAPSHOT</version>
          </dependency>-->
-        <dependency>
-            <groupId>com.social</groupId>
-            <artifactId>notification-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>

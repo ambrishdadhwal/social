@@ -2,8 +2,6 @@ package com.social.profile.controllers;
 
 import java.util.List;
 
-import com.social.profile.config.properties.ConfigProperties;
-import com.social.profile.db.profiles.CustomConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.social.profile.bootstrap.ProfileManager;
+import com.social.profile.config.properties.ConfigProperties;
 
 @RestController
 @RequestMapping("/misc")
@@ -24,14 +23,11 @@ public class MiscController
 	@Autowired
 	ProfileManager profileManager;
 
-	//@Autowired
-	//DatasourceConfig datasourceConfig;
+	// @Autowired
+	// DatasourceConfig datasourceConfig;
 
 	@Autowired
-    ConfigProperties configProperties;
-
-	@Autowired
-    CustomConfig cConfig;
+	ConfigProperties configProperties;
 
 	@Autowired
 	Environment env;
@@ -45,7 +41,7 @@ public class MiscController
 	@GetMapping(value = "/profiles")
 	public ResponseEntity<List<String>> getProfiles()
 	{
-		//datasourceConfig.setup();
+		// datasourceConfig.setup();
 		return new ResponseEntity<>(profileManager.getActiveProfiles(), HttpStatus.OK);
 	}
 
@@ -53,12 +49,6 @@ public class MiscController
 	public ResponseEntity<String> getCustomValues()
 	{
 		return new ResponseEntity<>("Properties are -----> " + configProperties.toString(), HttpStatus.OK);
-	}
-
-	@GetMapping(value = "/custom-config")
-	public ResponseEntity<String> customConfig()
-	{
-		return new ResponseEntity<>("custom config is --->" + env.getProperty("database") + "...." + cConfig.toString(), HttpStatus.OK);
 	}
 
 	@ResponseBody

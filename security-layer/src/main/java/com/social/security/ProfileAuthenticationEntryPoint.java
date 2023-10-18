@@ -1,4 +1,4 @@
-package com.social.profile.security;
+package com.social.security;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
