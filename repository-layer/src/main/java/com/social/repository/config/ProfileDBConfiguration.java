@@ -1,16 +1,19 @@
-package com.social.profile.db.profiles;
+package com.social.repository.config;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 
-@Configuration
+import lombok.extern.slf4j.Slf4j;
+
+@Configuration(proxyBeanMethods = false)
+@Slf4j
 public class ProfileDBConfiguration
 {
 
@@ -19,9 +22,10 @@ public class ProfileDBConfiguration
 
 	@Bean
 	@Profile("dev")
+	@Primary
 	public DataSource dataDevSource()
 	{
-		System.out.println("###...Dev Profile is active...###");
+		log.info("###...Dev Profile is active...###");
 		DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
 		dataSourceBuilder.driverClassName("spring.datasource.driverClassName");
 		dataSourceBuilder.url(env.getProperty("spring.datasource.url"));
@@ -32,36 +36,29 @@ public class ProfileDBConfiguration
 
 	@Bean
 	@Profile("prod")
+	@Primary
 	public DataSource dataProdSource()
 	{
-		System.out.println("###...prod Profile is active...###");
+		log.info("###...prod Profile is active...###");
 		DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
-		//dataSourceBuilder.driverClassName("spring.datasource.driverClassName");
+		// dataSourceBuilder.driverClassName("spring.datasource.driverClassName");
 		dataSourceBuilder.url(env.getProperty("spring.datasource.url"));
 		dataSourceBuilder.username(env.getProperty("spring.datasource.username"));
 		dataSourceBuilder.password(env.getProperty("spring.datasource.password"));
 		return dataSourceBuilder.build();
 	}
-	
+
 	@Bean
 	@Profile("h2")
+	@Primary
 	public DataSource dataH2Source()
 	{
-		System.out.println("###...h2 Profile is active...###");
+		log.info("###...h2 Profile is active...###");
 		DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
-		//dataSourceBuilder.driverClassName("spring.datasource.driverClassName");
+		// dataSourceBuilder.driverClassName("spring.datasource.driverClassName");
 		dataSourceBuilder.url(env.getProperty("spring.datasource.url"));
 		dataSourceBuilder.username(env.getProperty("spring.datasource.username"));
 		dataSourceBuilder.password(env.getProperty("spring.datasource.password"));
 		return dataSourceBuilder.build();
 	}
-
-	@Bean
-	@ConditionalOnBean(ProfileDB.class)
-	public ProfileDB myBeanForOthers()
-	{
-		System.out.println("###...@ConditionalOnBean is active...###");
-		return ProfileDB.builder().build();
-	}
-
 }

@@ -30,6 +30,7 @@ public class RedisConfig {
 
     @Bean
     public CacheManager cacheManager() {
+    	 System.out.println("...####Redis cache Bean is created####....");
         return RedisCacheManager
                 .builder(this.lettuceConnectionFactory())
                 .cacheDefaults(this.redisCacheConfiguration())
