@@ -9,6 +9,7 @@ import com.social.repository.ProfileImageRepo;
 import com.social.repository.ProfileRepo;
 import com.social.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -28,12 +29,12 @@ public class ProfileService implements IProfileService
 
 	@Autowired
 	ProfileRepo profileRepo;
-	
+
 	@Autowired
 	IProfileRoleRepo fUserRoleRepo;
 
 	@Autowired
-    ProfileImageRepo userImageRepo;
+	ProfileImageRepo userImageRepo;
 
 	public Optional<Profile> saveUser(Profile user)
 	{
@@ -47,10 +48,11 @@ public class ProfileService implements IProfileService
 	}
 
 	@Override
-	public void recover(SQLException e, String sql) {
+	public void recover(SQLException e, String sql)
+	{
 
 	}
-	
+
 	/*public boolean saveUserRole(SocialUser savedUser)
 	{
 		Long userId = savedUser.getId();
@@ -67,6 +69,7 @@ public class ProfileService implements IProfileService
 		return false;
 	}*/
 
+	@Cacheable(value = "data", key = "'all-users'")
 	public List<Profile> allUsers()
 	{
 		return userRepo.findAll().stream().map(ProfileMapper::convert).collect(Collectors.toList());
@@ -74,19 +77,21 @@ public class ProfileService implements IProfileService
 
 	public Optional<Profile> getUserbyId(Long userId)
 	{
-		return allUsers().stream().filter(n->n.getId().equals(userId)).findAny();
+		return allUsers().stream().filter(n -> n.getId().equals(userId)).findAny();
 	}
 
 	@Override
-	public Optional<Profile> getUserbyUserNameAndId(String userName, Long userId) {
+	public Optional<Profile> getUserbyUserNameAndId(String userName, Long userId)
+	{
 		return allUsers().stream()
-				.filter(n->n.getEmail().equals(userName) && n.getId().equals(userId))
-				.findAny();
+			.filter(n -> n.getEmail().equals(userName) && n.getId().equals(userId))
+			.findAny();
 	}
 
 	@Override
-	public Optional<Profile> deleteUserById(Long userId) {
-		Optional<Profile> user = allUsers().stream().filter(n->n.getId().equals(userId)).findAny();
+	public Optional<Profile> deleteUserById(Long userId)
+	{
+		Optional<Profile> user = allUsers().stream().filter(n -> n.getId().equals(userId)).findAny();
 		userRepo.deleteById(userId);
 		return user;
 	}
@@ -103,19 +108,20 @@ public class ProfileService implements IProfileService
 	}
 
 	@Override
-	public Optional<Profile> updateUser(Profile user) {
+	public Optional<Profile> updateUser(Profile user)
+	{
 		ProfileE existingUser = ProfileMapper.convert(user);
 		existingUser.setModifiedDateTime(LocalDate.now());
 		ProfileE savedUser = userRepo.save(existingUser);
 
-        Set<ProfileImageE> userProfileImages = existingUser.getProfileImages();
-        userProfileImages.forEach(m->{
-            m.setUserId(savedUser);
-        });
+		Set<ProfileImageE> userProfileImages = existingUser.getProfileImages();
+		userProfileImages.forEach(m -> {
+			m.setUserId(savedUser);
+		});
 
-        userImageRepo.saveAll(userProfileImages);
+		userImageRepo.saveAll(userProfileImages);
 
-		return  Optional.of(ProfileMapper.convert(savedUser));
+		return Optional.of(ProfileMapper.convert(savedUser));
 	}
 
 }

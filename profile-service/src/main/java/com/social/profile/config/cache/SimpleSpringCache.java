@@ -15,10 +15,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+import lombok.extern.slf4j.Slf4j;
+
 @EnableCaching
 @Configuration
 @ConditionalOnProperty(name = "cache.simple.enable", havingValue = "true")
 @ConditionalOnMissingBean(name = "cacheManager")
+@Slf4j
 public class SimpleSpringCache
 {
 
@@ -30,16 +33,16 @@ public class SimpleSpringCache
 		List<Cache> caches = new ArrayList<>();
 		caches.add(new ConcurrentMapCache("data"));
 		cacheManager.setCaches(caches);
-		System.out.println("...####Simple cache Bean is created####....");
+		log.debug("...####Simple cache Bean is created... Because Redis CacheManager Bean was missing####....");
 		return cacheManager;
 	}
 
-	//*This bean will not be created because of same type*/
+	// *This bean will not be created because of same type*/
 	@Bean(name = "cacheManager1")
 	@ConditionalOnBean(name = "cacheManager")
 	public CacheManager cacheManager1()
 	{
-		System.out.println("...####If cacheManager bean is present than creating cacheManager1####....");
+		log.debug("...####If cacheManager bean is present than creating cacheManager1####....");
 		SimpleCacheManager cacheManager = new SimpleCacheManager();
 		return cacheManager;
 	}
