@@ -22,6 +22,7 @@ public class ProfileAuthentiationProvider implements AuthenticationProvider
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException
 	{
+		System.out.println("Inside ProfileAuthentiationProvider.authenticate .....");
 		String username = authentication.getName();
 		String password = (String)authentication.getCredentials();
 

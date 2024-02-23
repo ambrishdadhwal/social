@@ -31,13 +31,12 @@ public class ProfileMapper
 
 		if( from.getProfileImages() != null) {
 			images = from.getProfileImages().stream().map(n->{
-				ProfileImage profile = ProfileImage.builder()
+				return ProfileImage.builder()
 						.id(n.getId())
 						.imageName(n.getImageName())
 						.imageDescription(n.getImageDescription())
 						.image(n.getImage())
 						.build();
-				return profile;
 			}).collect(Collectors.toSet());
 		}
 

@@ -35,6 +35,7 @@
         <module>dashboard-service</module>
         <module>profile-service</module>
         <module>security-layer</module>
+        <module>SpringTest</module>
 
     </modules>
 

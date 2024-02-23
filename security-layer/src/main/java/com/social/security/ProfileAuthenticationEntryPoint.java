@@ -19,6 +19,7 @@ public class ProfileAuthenticationEntryPoint extends BasicAuthenticationEntryPoi
 		HttpServletResponse response,
 		AuthenticationException authEx) throws IOException
 	{
+		System.out.println("Inside ProfileAuthenticationEntryPoint.BasicAuthenticationEntryPoint .....");
 		response.setContentType("application/json");
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		response.getOutputStream().println(

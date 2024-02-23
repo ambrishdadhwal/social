@@ -2,8 +2,8 @@ package com.social.security;
 
 
 import com.social.domain.Profile;
-import com.social.service.IProfileService;
-import com.social.service.ProfileService;
+import com.social.service.IUserService;
+import com.social.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,12 +18,13 @@ public class CustomUserDetailsService implements UserDetailsService
 {
 
 	@Autowired
-	IProfileService profileService;
+	IUserService profileService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
 	{
 		List<Profile> allUsers = profileService.allUsers();
+		System.out.println("Inside CustomUserDetailsService.loadUserByUsername .....");
 
 		allUsers.removeIf(n -> !n.getEmail().equals(username));
 

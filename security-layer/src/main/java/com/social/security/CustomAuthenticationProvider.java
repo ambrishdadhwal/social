@@ -17,6 +17,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider
 	{
 		String name = authentication.getName();
 		String password = authentication.getCredentials().toString();
+		System.out.println("Inside CustomAuthenticationProvider.authenticate .....");
 
 		// if (shouldAuthenticateAgainstThirdPartySystem())
 		{
