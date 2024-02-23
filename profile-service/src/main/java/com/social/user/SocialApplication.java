@@ -1,6 +1,5 @@
 package com.social.user;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -13,6 +12,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.retry.annotation.EnableRetry;
 
+import lombok.extern.slf4j.Slf4j;
+
 @SpringBootApplication
 @ConfigurationPropertiesScan
 @EnableAutoConfiguration(exclude = ErrorMvcAutoConfiguration.class)
@@ -23,11 +24,9 @@ import org.springframework.retry.annotation.EnableRetry;
 {"com.social"})
 @ComponentScan(basePackages =
 {"com.social"})
+@Slf4j
 public class SocialApplication implements CommandLineRunner
 {
-
-	@Value("${java.home}")
-	private String java;
 
 	public static void main(String[] args)
 	{
@@ -41,8 +40,7 @@ public class SocialApplication implements CommandLineRunner
 	@Override
 	public void run(String... args) throws Exception
 	{
-		System.out.println(java);
-		System.out.println("Command line runner executed...............");
+		log.info("Command line runner executed : ");
 		for (int i = 0; i < args.length; ++i)
 		{
 			System.out.println("args[{}]: {}" + i + " , " + args[i]);

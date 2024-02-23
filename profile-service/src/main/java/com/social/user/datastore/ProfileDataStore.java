@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-
 import com.social.presentation.ProfileDTO;
 import lombok.experimental.UtilityClass;
 
@@ -13,8 +12,7 @@ import lombok.experimental.UtilityClass;
 public class ProfileDataStore
 {
 
-	private static List<ProfileDTO> users = new ArrayList<ProfileDTO>();
-
+	private static final List<ProfileDTO> users = new ArrayList<>();
 
 	static long counter;
 

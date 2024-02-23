@@ -3,7 +3,6 @@ package com.social.user.config.cache;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.Cache;
@@ -29,21 +28,11 @@ public class SimpleSpringCache
 	@Primary
 	public CacheManager cacheManager()
 	{
+		log.debug("...####Simple cache Bean is created... Because Redis CacheManager Bean was missing####....");
 		SimpleCacheManager cacheManager = new SimpleCacheManager();
 		List<Cache> caches = new ArrayList<>();
 		caches.add(new ConcurrentMapCache("data"));
 		cacheManager.setCaches(caches);
-		log.debug("...####Simple cache Bean is created... Because Redis CacheManager Bean was missing####....");
-		return cacheManager;
-	}
-
-	// *This bean will not be created because of same type*/
-	@Bean(name = "cacheManager1")
-	@ConditionalOnBean(name = "cacheManager")
-	public CacheManager cacheManager1()
-	{
-		log.debug("...####If cacheManager bean is present than creating cacheManager1####....");
-		SimpleCacheManager cacheManager = new SimpleCacheManager();
 		return cacheManager;
 	}
 

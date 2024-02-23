@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -28,7 +27,6 @@ import com.social.user.datastore.ProfileDataStore;
 
 @RestController
 @RequestMapping("/user")
-//@CacheConfig(cacheManager = "cacheManager", cacheNames = "data")
 public class UserController
 {
 

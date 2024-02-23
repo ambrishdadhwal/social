@@ -23,9 +23,6 @@ public class MiscController
 	@Autowired
 	ProfileManager profileManager;
 
-	// @Autowired
-	// DatasourceConfig datasourceConfig;
-
 	@Autowired
 	ConfigProperties configProperties;
 
@@ -41,7 +38,6 @@ public class MiscController
 	@GetMapping(value = "/profiles")
 	public ResponseEntity<List<String>> getProfiles()
 	{
-		// datasourceConfig.setup();
 		return new ResponseEntity<>(profileManager.getActiveProfiles(), HttpStatus.OK);
 	}
 

@@ -1,20 +1,22 @@
 package com.social.user.controllers;
 
-import com.social.presentation.ProfileDTO;
-import com.social.user.config.cache.CacheService;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
-import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.cache.support.SimpleValueWrapper;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collection;
+import com.social.user.config.cache.CacheService;
 
 @RestController
 @RequestMapping("/cache")
