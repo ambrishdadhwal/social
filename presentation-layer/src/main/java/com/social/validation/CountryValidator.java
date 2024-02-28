@@ -1,4 +1,4 @@
-package validation;
+package com.social.validation;
 
 import com.social.presentation.CountryDTO;
 import jakarta.validation.Constraint;

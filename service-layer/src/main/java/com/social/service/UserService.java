@@ -124,4 +124,32 @@ public class UserService implements IUserService
 		return Optional.of(ProfileMapper.convert(savedUser));
 	}
 
+	@Override
+	public Optional<Profile> getUserbyUserName(String userName)
+	{
+		// TODO Auto-generated method stub
+		return Optional.empty();
+	}
+
+	@Override
+	public Optional<Profile> getUserbyEmail(String email)
+	{
+		// TODO Auto-generated method stub
+		return Optional.empty();
+	}
+
+	@Override
+	public List<Profile> getUserbyuserEmail(String email)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Profile> searchUsers(String search)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

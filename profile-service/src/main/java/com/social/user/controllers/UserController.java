@@ -61,6 +61,19 @@ public class UserController
 	{
 		return new ResponseEntity<>(userService.totalSocialUsers(), HttpStatus.OK);
 	}
+	
+	/*
+	 * update user profile
+	 * */
+	@PostMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
+	public ResponseEntity<CommonResponse> updateUser(@PathVariable Long id, @RequestBody @Validated ProfileDTO user)
+	{
+		Optional<Profile> newUser = userService.updateUser(ProfileMapper.convert(user));
+		CommonResponse<ProfileDTO> dto = new CommonResponse<>();
+		dto.setData(ProfileMapper.convertDTO(newUser.get()));
+
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
 
 	@PostMapping(value = "/", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<CommonResponse> createUser(@RequestBody @Validated ProfileDTO user)
@@ -79,5 +92,6 @@ public class UserController
 		userService.deleteUserById(id);
 		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 	}
-
+	
+   
 }

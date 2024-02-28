@@ -1,4 +1,4 @@
-package validation;
+package com.social.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

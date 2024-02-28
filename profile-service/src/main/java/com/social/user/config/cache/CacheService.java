@@ -19,7 +19,7 @@ import com.social.presentation.ProfileDTO;
 @CacheConfig(cacheManager = "cacheManager", cacheNames = "data")
 public class CacheService
 {
-
+	
 	@Autowired
 	CacheManager cacheManager;
 

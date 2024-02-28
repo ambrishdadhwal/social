@@ -10,8 +10,9 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
+import org.thymeleaf.spring6.SpringTemplateEngine;
+import org.thymeleaf.spring6.view.ThymeleafViewResolver;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @EnableWebMvc
 @Configuration
@@ -66,15 +67,35 @@ public class WebMvcConfig implements WebMvcConfigurer
 	}
 
 	@Bean
+	public ClassLoaderTemplateResolver templateResolver()
+	{
+
+		var templateResolver = new ClassLoaderTemplateResolver();
+
+		templateResolver.setPrefix("templates/");
+		templateResolver.setCacheable(false);
+		templateResolver.setSuffix(".html");
+		templateResolver.setTemplateMode("HTML5");
+		templateResolver.setCharacterEncoding("UTF-8");
+
+		return templateResolver;
+	}
+
+	@Bean
+	public SpringTemplateEngine templateEngine()
+	{
+		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		templateEngine.setTemplateResolver(templateResolver());
+		return templateEngine;
+	}
+
+	@Bean
 	public ViewResolver viewResolver()
 	{
-		InternalResourceViewResolver bean = new InternalResourceViewResolver();
-
-		bean.setViewClass(JstlView.class);
-		bean.setPrefix("/WEB-INF/view/");
-		bean.setSuffix(".html");
-
-		return bean;
+		var viewResolver = new ThymeleafViewResolver();
+		viewResolver.setTemplateEngine(templateEngine());
+		viewResolver.setCharacterEncoding("UTF-8");
+		return viewResolver;
 	}
 
 }
