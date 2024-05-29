@@ -44,7 +44,7 @@ public class UserController
 	}
 
 	@GetMapping(value = "/{id}")
-	public CommonResponse<ProfileDTO> getUserById(@PathVariable(required = true) Long id)
+	public CommonResponse<ProfileDTO> getUserById(@PathVariable(required = true, name = "id") Long id)
 	{
 		// only login user can access their own data
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
