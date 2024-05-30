@@ -15,7 +15,7 @@ import com.social.commonutils.ProfileMapper;
 import com.social.domain.Profile;
 import com.social.presentation.ProfileDTO;
 import com.social.presentation.ProfileLoginDTO;
-import com.social.security.JwtTokenUtil;
+import com.social.security.jwt.JwtTokenUtil;
 import com.social.service.IUserService;
 
 import lombok.RequiredArgsConstructor;

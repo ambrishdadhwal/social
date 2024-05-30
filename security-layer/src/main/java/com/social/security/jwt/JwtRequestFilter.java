@@ -1,4 +1,4 @@
-package com.social.security;
+package com.social.security.jwt;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -11,6 +11,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.social.security.CustomUserDetailsService;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;

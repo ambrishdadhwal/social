@@ -1,4 +1,4 @@
-package com.social.security;
+package com.social.security.filters;
 
 import java.util.ArrayList;
 

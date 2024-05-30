@@ -1,9 +1,7 @@
 package com.social.user;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -20,6 +18,7 @@ import com.social.domain.Country;
 import com.social.entity.ProfileE;
 import com.social.repository.UserRepo;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
@@ -33,10 +32,11 @@ import lombok.extern.slf4j.Slf4j;
 @ComponentScan(basePackages =
 {"com.social"})
 @Slf4j
+@RequiredArgsConstructor
 public class ProfileServiceApplication implements CommandLineRunner
 {
-	@Autowired
-	UserRepo userRepo;
+
+	final UserRepo userRepo;
 
 	public static void main(String[] args)
 	{

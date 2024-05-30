@@ -1,4 +1,4 @@
-package com.social.security;
+package com.social.security.jwt;
 
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;

@@ -1,6 +1,5 @@
 package com.social.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +11,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.authorization.AuthorizationEventPublisher;
 import org.springframework.security.authorization.SpringAuthorizationEventPublisher;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -23,25 +23,25 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.social.security.filters.ProfileAuthenticationEntryPoint;
+import com.social.security.jwt.JwtRequestFilter;
+
+import lombok.RequiredArgsConstructor;
+
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
+@EnableMethodSecurity
 public class SecurityConfigNew
 {
 
-	@Autowired
-	private ProfileAuthenticationEntryPoint authenticationEntryPoint;
+	final ProfileAuthenticationEntryPoint authenticationEntryPoint;
 
-	@Autowired
-	CustomUserDetailsService customUserDetailsService;
+	final CustomUserDetailsService customUserDetailsService;
 
-	@Autowired
-	ProfileAuthentiationProvider authProvider;
+	final ProfileAuthentiationProvider authProvider;
 
-	@Autowired
-	ProfileFilter profileFilter;
-
-	@Autowired
-	JwtRequestFilter jwtFilter;
+	final JwtRequestFilter jwtFilter;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception

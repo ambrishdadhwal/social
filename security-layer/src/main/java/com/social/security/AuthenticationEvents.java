@@ -1,6 +1,5 @@
 package com.social.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AbstractAuthenticationFailureEvent;
@@ -10,13 +9,16 @@ import org.springframework.stereotype.Component;
 import com.social.notification.ProfileNotificationDetails;
 import com.social.notification.ProfileNotificationService;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@RequiredArgsConstructor
+@Slf4j
 public class AuthenticationEvents
 {
 
-	@Autowired
-	ProfileNotificationService emailService;
+	final ProfileNotificationService emailService;
 
 	@Value("${spring.mail.username}")
 	String userName;
@@ -30,15 +32,15 @@ public class AuthenticationEvents
 			.msgBody("Login Succeed for application.")
 			.build();
 
-		try {
-			//emailService.sendSimpleMail(emailDetails);
-			System.out.println("###...success event is published...###" + success.getTimestamp());
+		try
+		{
+			// emailService.sendSimpleMail(emailDetails);
+			log.info("###...success event is published...###" + success.getTimestamp());
 		}
 		catch (Exception e)
 		{
-
+			log.error("Error while sending onSuccess notification... " + e.getMessage());
 		}
-
 	}
 
 	@EventListener
@@ -50,13 +52,14 @@ public class AuthenticationEvents
 			.msgBody("Login Failed for application. Try with valid credentials.")
 			.build();
 
-		try {
-		//	emailService.sendSimpleMail(emailDetails);
-			System.out.println("###...onFailure event is published...###" + failures.getTimestamp());
-	}
+		try
+		{
+			// emailService.sendSimpleMail(emailDetails);
+			log.info("###...onFailure event is published...###" + failures.getTimestamp());
+		}
 		catch (Exception e)
-	{
-
-	}
+		{
+			log.error("Error while sending onFailure notification... " + e.getMessage());
+		}
 	}
 }
