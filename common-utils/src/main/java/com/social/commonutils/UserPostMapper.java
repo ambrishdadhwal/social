@@ -1,16 +1,18 @@
 package com.social.commonutils;
 
-import com.social.domain.Profile;
-import com.social.domain.UserPost;
-import com.social.entity.UserPostE;
-import com.social.presentation.UserPostDTO;
-import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.ObjectUtils;
-
 import java.util.Objects;
 
+import com.social.domain.Profile;
+import com.social.domain.UserPost;
+import com.social.entity.ProfileE;
+import com.social.entity.UserPostE;
+import com.social.presentation.ProfileDTO;
+import com.social.presentation.UserPostDTO;
+
+import lombok.experimental.UtilityClass;
+
 @UtilityClass
-public class DashboardMapper
+public class UserPostMapper
 {
 
 	public static UserPost convert(UserPostDTO from)
@@ -21,7 +23,7 @@ public class DashboardMapper
 		}
 
 		return UserPost.builder()
-			.user(Profile.builder().id(Long.valueOf(from.getUserId())).build())
+			.user(Profile.builder().id(from.getUser().getId()).build())
 			.post(from.getPost())
 			.build();
 	}
@@ -33,9 +35,14 @@ public class DashboardMapper
 			return null;
 		}
 
+		Profile profile = from.getUser();
+
 		return UserPostDTO.builder()
-			.userId(1)
+			.id(from.getId())
+			.user(ProfileMapper.convertDTO(profile))
 			.post(from.getPost())
+			.createdTime(from.getCreatedTime())
+			.modifiedTime(from.getModifiedTime())
 			.build();
 	}
 
@@ -47,11 +54,10 @@ public class DashboardMapper
 		}
 
 		return UserPostE.builder()
-			.userId(from.getUser().getId())
 			.postData(from.getPost())
 			.build();
 	}
-	
+
 	public static UserPost convert(UserPostE from)
 	{
 		if (!Objects.nonNull(from))
@@ -59,10 +65,14 @@ public class DashboardMapper
 			return null;
 		}
 
+		ProfileE profile = from.getProfile();
+
 		return UserPost.builder()
-			.user(null)
+			.id(from.getId())
+			.user(ProfileMapper.convert(profile))
 			.post(from.getPostData())
+			.createdTime(from.getCreatedTime())
+			.modifiedTime(from.getModifiedTime())
 			.build();
 	}
-
 }

@@ -6,9 +6,14 @@ import java.util.Properties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnResource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
+import org.springframework.web.context.WebApplicationContext;
+
+import com.social.security.jwt.RequestContext;
 
 @Configuration
 public class SpringBootBootstrap
@@ -36,5 +41,6 @@ public class SpringBootBootstrap
 
 		return properties;
 	}
+
 
 }

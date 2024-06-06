@@ -9,6 +9,8 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
+import com.social.domain.Profile;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,8 +25,8 @@ public class UserPostE
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column
-	private Long userId;
+	@ManyToOne
+	private ProfileE profile;
 
 	@Column
 	private String postData;

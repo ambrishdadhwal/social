@@ -27,7 +27,7 @@ public class ProfileExceptionalHandler extends ResponseEntityExceptionHandler
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorDetails> handleGlobalException(Exception exception, WebRequest webRequest)
 	{
-		ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(), webRequest.getDescription(false));
+		ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getLocalizedMessage(), webRequest.getDescription(false));
 
 		return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -48,9 +48,10 @@ public class ProfileExceptionalHandler extends ResponseEntityExceptionHandler
 
 	@ExceptionHandler(
 	{AccessDeniedException.class, BadCredentialsException.class})
-	public ResponseEntity<Object> handleAccessDeniedException(Exception ex, WebRequest request)
+	public ResponseEntity<ErrorDetails> handleAccessDeniedException(Exception ex, WebRequest request)
 	{
-		return new ResponseEntity<Object>("Access denied message here", new HttpHeaders(), HttpStatus.FORBIDDEN);
+		ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
+		return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
 	}
 
 	@Override

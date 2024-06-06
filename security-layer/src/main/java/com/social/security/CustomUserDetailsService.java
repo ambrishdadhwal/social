@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService
 		if (currentUser.isPresent())
 		{
 			Profile user = currentUser.get();
-			return UserPrincipal.create(user, user.getRoles());
+			return UserPrincipal.create(user);
 		}
 
 		throw new UsernameNotFoundException("User not found with username :-" + username);

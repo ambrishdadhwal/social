@@ -15,7 +15,7 @@ public class ProfileImageDTO {
 
     private Long id;
 
-    private ProfileDTO userId;
+    private ProfileDTO user;
 
     private String imageName;
 

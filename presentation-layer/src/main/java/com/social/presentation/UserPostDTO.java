@@ -1,13 +1,19 @@
 package com.social.presentation;
 
-import jakarta.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -19,11 +25,18 @@ public class UserPostDTO
 
 	private Long id;
 
-	@NotNull
-	private Integer userId;
+	private ProfileDTO user;
 
-	//@NotNull
+	@NotEmpty(message = "post cannot be empty")
 	private String post;
+
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonFormat(pattern = "MM/dd/yyyy")
 	private LocalDateTime createdTime;
+
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonFormat(pattern = "MM/dd/yyyy")
 	private LocalDateTime modifiedTime;
 }

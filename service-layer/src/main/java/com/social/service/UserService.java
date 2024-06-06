@@ -8,8 +8,11 @@ import com.social.repository.IProfileRoleRepo;
 import com.social.repository.ProfileImageRepo;
 import com.social.repository.ProfileRepo;
 import com.social.repository.UserRepo;
+
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -36,20 +39,21 @@ public class UserService implements IUserService
 	@Autowired
 	ProfileImageRepo userImageRepo;
 
-	public Optional<Profile> saveUser(Profile user)
+	public Optional<Profile> saveUser(Profile user) throws ProfileException
 	{
 		ProfileE newUser = ProfileMapper.convert(user);
 		newUser.setCreateDateTime(LocalDate.now());
 		newUser.setModifiedDateTime(LocalDate.now());
 		newUser.setIsActive(true);
-		ProfileE savedUser = userRepo.save(newUser);
-
-		return Optional.of(ProfileMapper.convert(savedUser));
-	}
-
-	@Override
-	public void recover(SQLException e, String sql)
-	{
+		try
+		{
+			ProfileE savedUser = userRepo.save(newUser);
+			return Optional.of(ProfileMapper.convert(savedUser));
+		}
+		catch (DataAccessException e)
+		{
+			throw new ProfileException(e.getLocalizedMessage());
+		}
 
 	}
 
@@ -69,7 +73,7 @@ public class UserService implements IUserService
 		return false;
 	}*/
 
-	//@Cacheable(value = "data", key = "'all-users'")
+	// @Cacheable(value = "data", key = "'all-users'")
 	public List<Profile> allUsers()
 	{
 		return userRepo.findAll().stream().map(ProfileMapper::convert).collect(Collectors.toList());

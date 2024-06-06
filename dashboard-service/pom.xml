@@ -37,16 +37,16 @@
             <artifactId>presentation-layer</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.social</groupId>
-            <artifactId>domain-layer</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.social</groupId>
-            <artifactId>entity-layer</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+       <dependency>
+			<groupId>com.social</groupId>
+			<artifactId>service-layer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.social</groupId>
+			<artifactId>security-layer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
     </dependencies>
 
     <build>

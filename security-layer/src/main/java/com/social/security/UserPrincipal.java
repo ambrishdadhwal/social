@@ -1,10 +1,9 @@
 package com.social.security;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,21 +32,24 @@ public class UserPrincipal implements UserDetails
 	@JsonIgnore
 	private String password;
 
-	private Set<String> authGroups;
+	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserPrincipal(Long id, String email, String userName, String password, Set<String> authGroups)
+	public UserPrincipal(Long id, String email, String userName, String password, Collection<? extends GrantedAuthority> authorities)
 	{
 		this.id = id;
 		this.email = email;
 		this.userName = userName;
 		this.password = password;
-		this.authGroups = authGroups;
+		this.authorities = authorities;
 	}
 
-	public static UserPrincipal create(Profile user, Set<String> authGroups)
+	public static UserPrincipal create(Profile user)
 	{
+		List<GrantedAuthority> authorities = user.getRoles().stream()
+			.map(role -> new SimpleGrantedAuthority("ROLE_"+role))
+			.collect(Collectors.toList());
 
-		return new UserPrincipal(user.getId(), user.getEmail(), user.getEmail(), user.getPassword(), authGroups);
+		return new UserPrincipal(user.getId(), user.getEmail(), user.getEmail(), user.getPassword(), authorities);
 	}
 
 	public Long getId()
@@ -80,17 +82,6 @@ public class UserPrincipal implements UserDetails
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities()
 	{
-		if (null == authGroups)
-		{
-			return Collections.emptySet();
-		}
-
-		Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-
-		authGroups.forEach(n -> {
-			authorities.add(new SimpleGrantedAuthority(n));
-		});
-
 		return authorities;
 	}
 

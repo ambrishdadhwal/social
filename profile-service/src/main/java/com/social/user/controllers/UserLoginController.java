@@ -57,7 +57,7 @@ public class UserLoginController
 		if (existingUser.isPresent())
 		{
 			final String token = jwtTokenUtil.generateToken(existingUser.get());
-			return new ResponseEntity<>(new JwtResponse(token), status);
+			return new ResponseEntity<>(new JwtResponse("Bearer ".concat(token)), status);
 		}
 		else
 		{

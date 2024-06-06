@@ -1,7 +1,6 @@
 package com.social.security.jwt;
 
 import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -66,6 +65,8 @@ public class JwtTokenUtil implements Serializable
 	public String generateToken(Profile userProfile)
 	{
 		Map<String, Object> claims = new HashMap<>();
+		claims.put("userName", userProfile.getUserName());
+		claims.put("activeFlag", userProfile.getIsActive());
 		return generateToken(claims, userProfile);
 	}
 

@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
 public class UserPost
 {
 
-	private Integer id;
+	private Long id;
+	private Long userId;
 	private Profile user;
 	private String post;
 	private LocalDateTime createdTime;

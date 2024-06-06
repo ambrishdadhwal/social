@@ -1,23 +1,15 @@
 package com.social.service;
 
-import com.social.domain.Profile;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Recover;
-import org.springframework.retry.annotation.Retryable;
-
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import com.social.domain.Profile;
 
 public interface IUserService
 {
-	//params can be configurable in application.properties
-	@Retryable(retryFor = RuntimeException.class, maxAttempts = 2, backoff = @Backoff(delay = 500))
-	public Optional<Profile> saveUser(Profile user);
 
-	@Recover
-	void recover(SQLException e, String sql);
+	// params can be configurable in application.properties
+	public Optional<Profile> saveUser(Profile user) throws ProfileException;
 
 	public List<Profile> allUsers();
 
@@ -32,13 +24,13 @@ public interface IUserService
 	public Optional<Profile> getUserbyUserNameAndId(String userName, Long userId);
 
 	public Optional<Profile> deleteUserById(Long userId);
-	
+
 	public Optional<Profile> getUserbyUserName(String userName);
-	
+
 	public Optional<Profile> getUserbyEmail(String email);
-	
+
 	public List<Profile> getUserbyuserEmail(String email);
 
 	public List<Profile> searchUsers(String search);
-	
+
 }
