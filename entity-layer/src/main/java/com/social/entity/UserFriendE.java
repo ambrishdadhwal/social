@@ -2,6 +2,7 @@ package com.social.entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,11 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,29 +22,31 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
 @Entity
-@Table(name = "social_user_post")
-@NamedQueries(
-{@NamedQuery(query = "SELECT  u from UserPostE u where u.id =:postId", name = "UserPostE.findByPostId")})
-public class UserPostE
+@Table(name = "social_user_friend")
+@SuperBuilder
+public class UserFriendE
 {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "user_profile_id", referencedColumnName = "id")
-	private ProfileE profile;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private ProfileE user;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "friend_id", referencedColumnName = "id")
+	private ProfileE friend;
 
 	@Column
-	private String postData;
+	private Boolean isFriend;
 
 	@Column
-	@Temporal(TemporalType.TIMESTAMP)
-	private LocalDateTime createdTime;
+	private Boolean requestAccepted;
 
 	@Column
-	private LocalDateTime modifiedTime;
+	private LocalDateTime timestamp;
+
 }

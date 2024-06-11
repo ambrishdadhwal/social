@@ -15,7 +15,7 @@ public interface IUserService
 
 	public long totalSocialUsers();
 
-	public Optional<Profile> getUser(Profile user);
+	public Optional<Profile> getUser(Profile user) throws Exception;
 
 	public Optional<Profile> updateUser(Profile user);
 

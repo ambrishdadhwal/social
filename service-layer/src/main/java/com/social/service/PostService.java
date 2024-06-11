@@ -10,7 +10,7 @@ import com.social.commonutils.UserPostMapper;
 import com.social.domain.UserPost;
 import com.social.entity.ProfileE;
 import com.social.entity.UserPostE;
-import com.social.repository.PostRepo;
+import com.social.repository.UserPostRepo;
 import com.social.repository.UserRepo;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class PostService implements IPostService
 {
 
-	final PostRepo postRepo;
+	final UserPostRepo postRepo;
 
 	final UserRepo userRepo;
 

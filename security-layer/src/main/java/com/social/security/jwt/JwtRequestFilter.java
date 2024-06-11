@@ -29,9 +29,6 @@ public class JwtRequestFilter extends OncePerRequestFilter
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
 
-	@Autowired
-	RequestContext requestContext;
-
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException
 	{
@@ -64,13 +61,10 @@ public class JwtRequestFilter extends OncePerRequestFilter
 
 			if (username != null && SecurityContextHolder.getContext().getAuthentication() == null)
 			{
-				UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(username);
+				UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(username, request);
 
 				if (Boolean.TRUE.equals(jwtTokenUtil.validateToken(jwtToken, userDetails)))
 				{
-					requestContext.setEmail(userDetails.getUsername());
-					requestContext.setIsactive(userDetails.isEnabled());
-					requestContext.setToken(jwtToken);
 					UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 					token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(token);

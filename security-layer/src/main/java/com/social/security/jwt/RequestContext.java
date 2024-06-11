@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Component
-//@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+// @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,6 +19,7 @@ import lombok.Setter;
 public class RequestContext
 {
 
+	private Long userId;
 	private String userName;
 	private String email;
 	private String token;

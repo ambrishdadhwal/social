@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.social.domain.Profile;
 import com.social.service.IUserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +34,20 @@ public class CustomUserDetailsService implements UserDetailsService
 			return UserPrincipal.create(user);
 		}
 
+		throw new UsernameNotFoundException("User not found with username :-" + username);
+	}
+
+	public UserDetails loadUserByUsername(String username, HttpServletRequest request) throws UsernameNotFoundException
+	{
+		log.info("Inside CustomUserDetailsService.loadUserByUsername .....");
+		Optional<Profile> currentUser = profileService.allUsers().stream().filter(n -> n.getEmail().equals(username)).findAny();
+
+		if (currentUser.isPresent())
+		{
+			request.setAttribute("CurrentUser", currentUser.get());
+			Profile user = currentUser.get();
+			return UserPrincipal.create(user);
+		}
 		throw new UsernameNotFoundException("User not found with username :-" + username);
 	}
 }

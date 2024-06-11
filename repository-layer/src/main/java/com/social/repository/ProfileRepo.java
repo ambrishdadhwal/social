@@ -1,25 +1,24 @@
 package com.social.repository;
 
-import com.social.domain.Country;
-import com.social.domain.Profile;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
-
-import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-public class ProfileRepo
-{
+import javax.sql.DataSource;
 
-	@Autowired
-	JdbcTemplate jdbcTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+
+import com.social.domain.Country;
+import com.social.domain.Profile;
+import com.social.repository.config.SocialRepository;
+
+@Repository
+public class ProfileRepo extends SocialRepository
+{
 
 	@Autowired
 	DataSource dataProdSource;
@@ -31,7 +30,7 @@ public class ProfileRepo
 		return count;
 	}
 
-	public Optional<Profile> getUser(Profile user)
+	public Optional<Profile> getUser(Profile user) throws Exception
 	{
 		List<Object> args = new ArrayList<>();
 
@@ -74,12 +73,11 @@ public class ProfileRepo
 					.build();
 			}
 		}, args.toArray());
-		
-		if(existingUser.size() > 0)
+
+		if (existingUser.size() > 0)
 		{
 			return Optional.ofNullable(existingUser.get(0));
 		}
-
 		return Optional.empty();
 	}
 }

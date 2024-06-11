@@ -1,43 +1,34 @@
 package com.social.service;
 
-import com.social.commonutils.ProfileMapper;
-import com.social.domain.Profile;
-import com.social.entity.ProfileE;
-import com.social.entity.ProfileImageE;
-import com.social.repository.IProfileRoleRepo;
-import com.social.repository.ProfileImageRepo;
-import com.social.repository.ProfileRepo;
-import com.social.repository.UserRepo;
-
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Service;
-
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+
+import com.social.commonutils.ProfileMapper;
+import com.social.domain.Profile;
+import com.social.entity.ProfileE;
+import com.social.entity.ProfileImageE;
+import com.social.repository.ProfileImageRepo;
+import com.social.repository.ProfileRepo;
+import com.social.repository.UserRepo;
+
+import lombok.RequiredArgsConstructor;
+
 @Service("profileService")
+@RequiredArgsConstructor
 public class UserService implements IUserService
 {
 
-	@Autowired
-	UserRepo userRepo;
+	private final UserRepo userRepo;
 
-	@Autowired
-	ProfileRepo profileRepo;
+	private final ProfileRepo profileRepo;
 
-	@Autowired
-	IProfileRoleRepo fUserRoleRepo;
-
-	@Autowired
-	ProfileImageRepo userImageRepo;
+	private final ProfileImageRepo userImageRepo;
 
 	public Optional<Profile> saveUser(Profile user) throws ProfileException
 	{
@@ -106,7 +97,7 @@ public class UserService implements IUserService
 	}
 
 	@Override
-	public Optional<Profile> getUser(Profile user)
+	public Optional<Profile> getUser(Profile user) throws Exception
 	{
 		return profileRepo.getUser(user);
 	}

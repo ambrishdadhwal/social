@@ -1,20 +1,26 @@
 package com.social.presentation;
 
+import org.springframework.http.HttpStatus;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class CommonResponse<T> {
+@JsonInclude(Include.NON_NULL)
+public class CommonResponse<T>
+{
 
-    T data;
-    HttpStatus status;
-    String error;
+	T data;
+	HttpStatus status;
+	String error;
 }
