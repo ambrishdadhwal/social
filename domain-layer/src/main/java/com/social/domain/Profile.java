@@ -1,14 +1,14 @@
 package com.social.domain;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -30,7 +30,7 @@ public class Profile
 	private Set<String> roles;
 	private String profileImage;
 	private Set<ProfileImage> profileImages;
-	private LocalDate createDateTime;
-	private LocalDate modifiedDateTime;
+	private LocalDateTime createDateTime;
+	private LocalDateTime modifiedDateTime;
 
 }

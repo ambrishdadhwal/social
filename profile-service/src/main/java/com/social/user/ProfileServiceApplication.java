@@ -1,6 +1,7 @@
 package com.social.user;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.retry.annotation.EnableRetry;
 
 import com.social.domain.Country;
+import com.social.domain.Gender;
 import com.social.entity.ProfileE;
 import com.social.repository.UserRepo;
 
@@ -60,8 +62,9 @@ public class ProfileServiceApplication implements CommandLineRunner
 			.isActive(true)
 			.dob(LocalDate.now())
 			.country(Country.INDIA)
-			.createDateTime(LocalDate.now())
-			.modifiedDateTime(LocalDate.now())
+			.gender(Gender.NOT_INTERESTED_TO_MENTION)
+			.createDateTime(LocalDateTime.now())
+			.modifiedDateTime(LocalDateTime.now())
 			.build());
 
 	}

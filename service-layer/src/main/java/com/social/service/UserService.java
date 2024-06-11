@@ -1,6 +1,7 @@
 package com.social.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -33,8 +34,8 @@ public class UserService implements IUserService
 	public Optional<Profile> saveUser(Profile user) throws ProfileException
 	{
 		ProfileE newUser = ProfileMapper.convert(user);
-		newUser.setCreateDateTime(LocalDate.now());
-		newUser.setModifiedDateTime(LocalDate.now());
+		newUser.setCreateDateTime(LocalDateTime.now());
+		newUser.setModifiedDateTime(LocalDateTime.now());
 		newUser.setIsActive(true);
 		try
 		{
@@ -106,7 +107,7 @@ public class UserService implements IUserService
 	public Optional<Profile> updateUser(Profile user)
 	{
 		ProfileE existingUser = ProfileMapper.convert(user);
-		existingUser.setModifiedDateTime(LocalDate.now());
+		existingUser.setModifiedDateTime(LocalDateTime.now());
 		ProfileE savedUser = userRepo.save(existingUser);
 
 		Set<ProfileImageE> userProfileImages = existingUser.getProfileImages();

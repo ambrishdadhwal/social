@@ -1,9 +1,11 @@
 package com.social.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import com.social.domain.Country;
+import com.social.domain.Gender;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -17,6 +19,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -66,6 +70,10 @@ public class ProfileE
 	private Country country;
 
 	@Column
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
+
+	@Column
 	private LocalDate dob;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -73,8 +81,10 @@ public class ProfileE
 	private Set<ProfileRoleE> userRoles;
 
 	@Column
-	private LocalDate createDateTime;
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime createDateTime;
 
 	@Column
-	private LocalDate modifiedDateTime;
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime modifiedDateTime;
 }

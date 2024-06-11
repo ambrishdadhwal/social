@@ -1,6 +1,7 @@
 package com.social.commonutils;
 
 import com.social.domain.Country;
+import com.social.domain.Gender;
 import com.social.domain.Profile;
 import com.social.domain.ProfileImage;
 import com.social.entity.ProfileE;
@@ -91,6 +92,7 @@ public class ProfileMapper
 			.email(from.getEmail())
 			.password(from.getPassword())
 			.country(from.getCountry())
+			.gender(Gender.NOT_INTERESTED_TO_MENTION)
 			.dob(from.getDob())
 			.userRoles(roles)
 			.profileImage(from.getProfileImage())

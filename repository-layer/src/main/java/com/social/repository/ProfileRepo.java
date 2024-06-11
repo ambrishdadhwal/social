@@ -66,8 +66,8 @@ public class ProfileRepo extends SocialRepository
 					.email(rs.getString("email"))
 					.firstName(rs.getString("first_name"))
 					.lastName(rs.getString("last_name"))
-					.createDateTime(rs.getDate("create_date_time").toLocalDate())
-					.modifiedDateTime(rs.getDate("modified_date_time").toLocalDate())
+					.createDateTime(rs.getTimestamp("create_date_time").toLocalDateTime())
+					.modifiedDateTime(rs.getTimestamp("modified_date_time").toLocalDateTime())
 					.dob(rs.getDate("dob").toLocalDate())
 					.isActive(rs.getBoolean("is_active"))
 					.build();

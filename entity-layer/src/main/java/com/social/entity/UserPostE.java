@@ -48,5 +48,6 @@ public class UserPostE
 	private LocalDateTime createdTime;
 
 	@Column
+	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime modifiedTime;
 }
