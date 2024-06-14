@@ -1,5 +1,14 @@
 package com.social.presentation;
 
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,15 +20,27 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class ProfileImageDTO {
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+public class ProfileImageDTO
+{
 
-    private Long id;
+	private Long id;
 
-    private ProfileDTO user;
+	private ProfileDTO user;
 
-    private String imageName;
+	private String imageName;
 
-    private String imageDescription;
+	private String imageDescription;
 
-    private byte[] image;
+	private byte[] image;
+
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonFormat(pattern = "MM/dd/yyyy")
+	private LocalDateTime createDate;
+
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonFormat(pattern = "MM/dd/yyyy")
+	private LocalDateTime modifyDate;
 }

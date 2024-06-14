@@ -1,5 +1,7 @@
 package com.social.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,22 +16,31 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = "social_user_image")
 @SuperBuilder
-public class ProfileImageE {
+public class ProfileImageE
+{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_a_id")
-    private ProfileE userId;
+	@ManyToOne
+	@JoinColumn(name = "user_a_id")
+	private ProfileE userId;
 
-    @Column
-    private String imageName;
+	@Column
+	private String imageName;
 
-    @Column
-    private String imageDescription;
+	@Column
+	private String imageDescription;
 
-    @Column
-    private byte[] image;
+	@Column
+	private byte[] image;
+
+	@Column
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime createDateTime;
+
+	@Column
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime modifyDateTime;
 }

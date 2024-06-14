@@ -30,14 +30,17 @@ public class ProfileMapper
 
 		Set<ProfileImage> images = null;
 
-		if( from.getProfileImages() != null) {
-			images = from.getProfileImages().stream().map(n->{
+		if (from.getProfileImages() != null)
+		{
+			images = from.getProfileImages().stream().map(n -> {
 				return ProfileImage.builder()
-						.id(n.getId())
-						.imageName(n.getImageName())
-						.imageDescription(n.getImageDescription())
-						.image(n.getImage())
-						.build();
+					.id(n.getId())
+					.imageName(n.getImageName())
+					.imageDescription(n.getImageDescription())
+					.image(n.getImage())
+					.createDateTime(n.getCreateDateTime())
+					.modifyDateTime(n.getModifyDateTime())
+					.build();
 			}).collect(Collectors.toSet());
 		}
 
@@ -73,15 +76,17 @@ public class ProfileMapper
 
 		Set<ProfileImageE> images = null;
 
-		if( from.getProfileImages() != null) {
-			images = from.getProfileImages().stream().map(n->{
-				ProfileImageE profile = ProfileImageE.builder()
-						.id(n.getId())
-						.imageName(n.getImageName())
-						.imageDescription(n.getImageDescription())
-						.image(n.getImage())
-						.build();
-				return profile;
+		if (from.getProfileImages() != null)
+		{
+			images = from.getProfileImages().stream().map(n -> {
+				return ProfileImageE.builder()
+					.id(n.getId())
+					.imageName(n.getImageName())
+					.imageDescription(n.getImageDescription())
+					.image(n.getImage())
+					.createDateTime(n.getCreateDateTime())
+					.modifyDateTime(n.getModifyDateTime())
+					.build();
 			}).collect(Collectors.toSet());
 		}
 
@@ -116,15 +121,15 @@ public class ProfileMapper
 
 		Set<ProfileImage> images = null;
 
-		if( from.getProfileImages() != null) {
+		if (from.getProfileImages() != null)
+		{
 			images = from.getProfileImages().stream().map(n -> {
-				ProfileImage profile = ProfileImage.builder()
-						.id(n.getId())
-						.imageName(n.getImageName())
-						.imageDescription(n.getImageDescription())
-						.image(n.getImage())
-						.build();
-				return profile;
+				return ProfileImage.builder()
+					.id(n.getId())
+					.imageName(n.getImageName())
+					.imageDescription(n.getImageDescription())
+					.image(n.getImage())
+					.build();
 			}).collect(Collectors.toSet());
 		}
 
@@ -153,15 +158,17 @@ public class ProfileMapper
 		}
 		Set<ProfileImageDTO> images = null;
 
-		if( from.getProfileImages() != null) {
-			images = from.getProfileImages().stream().map(n->{
-				ProfileImageDTO profile = ProfileImageDTO.builder()
-						.id(n.getId())
-						.imageName(n.getImageName())
-						.imageDescription(n.getImageDescription())
-						.image(n.getImage())
-						.build();
-				return profile;
+		if (from.getProfileImages() != null)
+		{
+			images = from.getProfileImages().stream().map(n -> {
+				return ProfileImageDTO.builder()
+					.id(n.getId())
+					.imageName(n.getImageName())
+					.imageDescription(n.getImageDescription())
+					.image(n.getImage())
+					.createDate(n.getCreateDateTime())
+					.modifyDate(n.getModifyDateTime())
+					.build();
 			}).collect(Collectors.toSet());
 		}
 
