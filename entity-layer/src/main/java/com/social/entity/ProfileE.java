@@ -18,26 +18,33 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "social_user", uniqueConstraints =
+@Table(name = ProfileE.TABLE_NAME, uniqueConstraints =
 {@UniqueConstraint(columnNames = "email")})
 @SuperBuilder
+@Slf4j
+@Data
 public class ProfileE
 {
+
+	private final static String TABLE_NAME = "social_user";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -87,4 +94,10 @@ public class ProfileE
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime modifiedDateTime;
+
+	@PrePersist
+	public void logNewUserAttempt()
+	{
+		log.info("Attempting to add new user with email:\n " + toString());
+	}
 }

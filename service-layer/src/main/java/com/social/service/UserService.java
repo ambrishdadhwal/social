@@ -1,13 +1,11 @@
 package com.social.service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.social.commonutils.ProfileMapper;
@@ -31,8 +29,14 @@ public class UserService implements IUserService
 
 	private final ProfileImageRepo userImageRepo;
 
-	public Optional<Profile> saveUser(Profile user) throws ProfileException
+	public Optional<Profile> saveUser(Profile user) throws Exception
 	{
+		Optional<ProfileE> existingUser = userRepo.findByEmail(user.getEmail());
+		if (existingUser.isPresent())
+		{
+			throw new ProfileException("User already exist with email -- " + user.getEmail());
+		}
+
 		ProfileE newUser = ProfileMapper.convert(user);
 		newUser.setCreateDateTime(LocalDateTime.now());
 		newUser.setModifiedDateTime(LocalDateTime.now());
@@ -42,11 +46,10 @@ public class UserService implements IUserService
 			ProfileE savedUser = userRepo.save(newUser);
 			return Optional.of(ProfileMapper.convert(savedUser));
 		}
-		catch (DataAccessException e)
+		catch (Exception e)
 		{
 			throw new ProfileException(e.getLocalizedMessage());
 		}
-
 	}
 
 	/*public boolean saveUserRole(SocialUser savedUser)

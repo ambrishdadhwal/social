@@ -9,7 +9,7 @@ public interface IUserService
 {
 
 	// params can be configurable in application.properties
-	public Optional<Profile> saveUser(Profile user) throws ProfileException;
+	public Optional<Profile> saveUser(Profile user) throws Exception;
 
 	public List<Profile> allUsers();
 

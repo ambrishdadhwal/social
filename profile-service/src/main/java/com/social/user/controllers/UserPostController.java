@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
-public class PostController
+public class UserPostController
 {
 
 	final IUserService profileService;
