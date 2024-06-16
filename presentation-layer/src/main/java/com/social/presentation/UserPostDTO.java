@@ -1,6 +1,7 @@
 package com.social.presentation;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -25,18 +26,22 @@ public class UserPostDTO
 
 	private Long id;
 
+	private Long userId;
+
 	private ProfileDTO user;
 
 	@NotEmpty(message = "post cannot be empty")
 	private String post;
 
+	private Set<ProfileImageDTO> images;
+
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	@JsonFormat(pattern = "MM/dd/yyyy")
+	@JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
 	private LocalDateTime createdTime;
 
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	@JsonFormat(pattern = "MM/dd/yyyy")
+	@JsonFormat(pattern = "MM/dd/yyyy HH:mm:ss")
 	private LocalDateTime modifiedTime;
 }

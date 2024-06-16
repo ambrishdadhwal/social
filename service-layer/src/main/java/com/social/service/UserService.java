@@ -115,7 +115,7 @@ public class UserService implements IUserService
 
 		Set<ProfileImageE> userProfileImages = existingUser.getProfileImages();
 		userProfileImages.forEach(m -> {
-			m.setUserId(savedUser);
+			m.setUser(savedUser);
 		});
 
 		userImageRepo.saveAll(userProfileImages);

@@ -2,6 +2,7 @@ package com.social.user.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,7 @@ public class UserController
 	{
 		List<Profile> users = userService.allUsers();
 		CommonResponse<List<ProfileDTO>> dto = new CommonResponse<>();
-		dto.setData(users.stream().map(ProfileMapper::convertDTO).toList());
+		dto.setData(users.stream().map(ProfileMapper::convertDTO).collect(Collectors.toList()));
 		dto.setStatus(HttpStatus.OK);
 		return dto;
 	}

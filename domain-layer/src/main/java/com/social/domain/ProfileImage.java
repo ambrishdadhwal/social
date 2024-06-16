@@ -22,6 +22,7 @@ public class ProfileImage
 	private String imageName;
 	private String imageDescription;
 	private byte[] image;
+	private String imageType;
 	private LocalDateTime createDateTime;
 	private LocalDateTime modifyDateTime;
 }

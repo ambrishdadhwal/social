@@ -1,20 +1,9 @@
 package com.social.entity;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,11 +29,14 @@ public class UserPostE
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "user_profile_id", referencedColumnName = "id")
-	private ProfileE profile;
+	@JoinColumn(name = "user_a_id", referencedColumnName = "id")
+	private ProfileE user;
 
 	@Column
 	private String postData;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<ProfileImageE> images;
 
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)
@@ -57,6 +49,6 @@ public class UserPostE
 	@PrePersist
 	public void logNewUserAttempt()
 	{
-		log.info("Attempting to add new user with username: " + profile);
+		log.info("Attempting to add new user with username: " + user);
 	}
 }

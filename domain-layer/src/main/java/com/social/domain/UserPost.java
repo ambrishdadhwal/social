@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,6 +21,7 @@ public class UserPost
 	private Long userId;
 	private Profile user;
 	private String post;
+	private Set<ProfileImage> images;
 	private LocalDateTime createdTime;
 	private LocalDateTime modifiedTime;
 }

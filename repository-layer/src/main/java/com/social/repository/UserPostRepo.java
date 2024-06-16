@@ -10,7 +10,7 @@ import com.social.entity.UserPostE;
 public interface UserPostRepo extends CrudRepository<UserPostE, Long>
 {
 
-	@Query("select u from UserPostE u where u.profile.id = ?1")
+	@Query("select u from UserPostE u where u.user.id = ?1")
 	List<UserPostE> getPostsByProfile(Long userId);
 
 }

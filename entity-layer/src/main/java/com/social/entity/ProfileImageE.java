@@ -23,15 +23,22 @@ public class ProfileImageE
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "user_a_id")
-	private ProfileE userId;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_a_id", referencedColumnName = "id")
+	private ProfileE user;
+
+	@ManyToOne(cascade = CascadeType.ALL, targetEntity = UserPostE.class)
+	@JoinColumn(name = "post_id")
+	private UserPostE post;
 
 	@Column
 	private String imageName;
 
 	@Column
 	private String imageDescription;
+
+	@Column
+	private String imageType;
 
 	@Column
 	private byte[] image;

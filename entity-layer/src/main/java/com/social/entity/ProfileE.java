@@ -44,7 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ProfileE
 {
 
-	private final static String TABLE_NAME = "social_user";
+	protected final static String TABLE_NAME = "social_user";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

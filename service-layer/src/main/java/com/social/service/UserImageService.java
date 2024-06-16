@@ -20,56 +20,48 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserImageService implements IUserImageService
-{
+public class UserImageService implements IUserImageService {
 
-	private final IUserService userService;
+    private final IUserService userService;
 
-	public static final String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
+    public static final String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
 
-	@Override
-	public Optional<Profile> uploadUserImage(ProfileImage image, MultipartFile file)
-	{
-		Optional<Profile> profile = userService.getUserbyId(image.getUserId());
+    @Override
+    public Optional<Profile> uploadUserImage(ProfileImage image, MultipartFile file) {
+        Optional<Profile> profile = userService.getUserbyId(image.getUserId());
 
-		if (profile.isPresent())
-		{
-			try
-			{
-				StringBuilder fileNames = new StringBuilder();
-				Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
-				fileNames.append(file.getOriginalFilename());
-				Files.write(fileNameAndPath, file.getBytes());
+        if (profile.isPresent()) {
+            try {
+                StringBuilder fileNames = new StringBuilder();
+                Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
+                fileNames.append(file.getOriginalFilename());
+                Files.write(fileNameAndPath, file.getBytes());
 
-				profile.get().setProfileImage(fileNameAndPath.toString());
+                profile.get().setProfileImage(fileNameAndPath.toString());
 
-				ProfileImage profileImage = ProfileImage.builder()
-					.imageName(file.getOriginalFilename())
-					.imageDescription(fileNameAndPath.toString())
-					.createDateTime(LocalDateTime.now())
-					.modifyDateTime(LocalDateTime.now())
-					.build();
+                ProfileImage profileImage = ProfileImage.builder()
+                        .imageName(file.getOriginalFilename())
+                        .imageDescription(fileNameAndPath.toString())
+                        .imageType("Profile")
+                        .createDateTime(LocalDateTime.now())
+                        .modifyDateTime(LocalDateTime.now())
+                        .build();
 
-				Set<ProfileImage> existing = profile.get().getProfileImages();
+                Set<ProfileImage> existing = profile.get().getProfileImages();
 
-				if (existing != null)
-				{
-					existing.add(profileImage);
-				}
-				else
-				{
-					existing = new HashSet<>();
-					existing.add(profileImage);
-				}
+                if (existing != null) {
+                    existing.add(profileImage);
+                } else {
+                    existing = new HashSet<>();
+                    existing.add(profileImage);
+                }
 
-				profile.get().setProfileImages(existing);
-				return userService.updateUser(profile.get());
-			}
-			catch (Exception e)
-			{
-				log.error("Some thing went wrong while saving the image : {} ", e.getLocalizedMessage());
-			}
-		}
-		return Optional.empty();
-	}
+                profile.get().setProfileImages(existing);
+                return userService.updateUser(profile.get());
+            } catch (Exception e) {
+                log.error("Some thing went wrong while saving the image : {} ", e.getLocalizedMessage());
+            }
+        }
+        return Optional.empty();
+    }
 }
