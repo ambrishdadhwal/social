@@ -44,14 +44,19 @@ public class PostService implements IPostService {
             profilePostE.setUser(profile.get());
             log.info("Profile ID ---------- {}", profile.get().getId());
             profilePostE = postRepo.save(profilePostE);
+            try {
+                final UserPostE savedPost = profilePostE;
+                profilePostE.getImages().forEach(m -> {
+                    m.setUser(profile.get());
+                    m.setPost(savedPost);
 
-            final UserPostE savedPost = profilePostE;
-            profilePostE.getImages().forEach(m -> {
-                m.setUser(profile.get());
-                m.setPost(savedPost);
-                imageRepo.save(m);
-                log.info("Post successly save in Image entity :");
-            });
+                    imageRepo.save(m);
+                    log.info("Post successly save in Image entity :");
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
             result = Optional.of(UserPostMapper.convert(profilePostE));
         }

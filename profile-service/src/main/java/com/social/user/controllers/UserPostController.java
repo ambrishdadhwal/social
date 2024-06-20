@@ -10,6 +10,8 @@ import java.util.Set;
 
 import com.social.domain.ProfileImage;
 import com.social.presentation.ProfileImageDTO;
+import com.social.service.ProfileUtil;
+import com.social.user.utils.ProfileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,31 +54,13 @@ public class UserPostController {
     @PostMapping(value = "/{userId}/post", produces = "application/json")
     public ResponseEntity<UserPostDTO> addPostForUser(@PathVariable("userId") Long userId,
                                                       @RequestParam(name = "post") String post,
-                                                      @RequestParam(name = "file", required = false) MultipartFile file) {
-        ProfileImageDTO postImage = null;
-        if (file != null) {
-            try {
-                StringBuilder fileName = new StringBuilder();
-                Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
-                fileName.append(file.getOriginalFilename());
-                Files.write(fileNameAndPath, file.getBytes());
+                                                      @RequestParam(name = "file", required = false) MultipartFile[] files) {
 
-                postImage = ProfileImageDTO.builder()
-                        .imageName(file.getOriginalFilename())
-                        .imageDescription(fileNameAndPath.toString())
-                        .imageType("Post")
-                        .createDate(LocalDateTime.now())
-                        .modifyDate(LocalDateTime.now())
-                        .build();
-            } catch (Exception e) {
-                log.error("Exception while saving image in local dir - {}", e.getLocalizedMessage());
-            }
-        }
-
+        Set<ProfileImageDTO> images = ProfileUtils.createImages(files);
         UserPostDTO request = UserPostDTO.builder()
                 .userId(userId)
                 .post(post)
-                .images(postImage!=null ? Set.of(postImage) : null)
+                .images(images)
                 .build();
         Optional<UserPost> result = postService.addUserPost(UserPostMapper.convert(request));
         if (result.isPresent()) {

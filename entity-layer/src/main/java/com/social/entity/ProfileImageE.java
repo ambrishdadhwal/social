@@ -27,8 +27,7 @@ public class ProfileImageE
 	@JoinColumn(name = "user_a_id", referencedColumnName = "id")
 	private ProfileE user;
 
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = UserPostE.class)
-	@JoinColumn(name = "post_id")
+	@ManyToOne(cascade = CascadeType.ALL)
 	private UserPostE post;
 
 	@Column
