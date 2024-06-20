@@ -34,7 +34,7 @@ public class ProfileImageDTO
 
 	private byte[] image;
 
-	private String imageType;
+	private ImageTypeDTO imageType;
 
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)

@@ -113,12 +113,12 @@ public class UserService implements IUserService
 		existingUser.setModifiedDateTime(LocalDateTime.now());
 		ProfileE savedUser = userRepo.save(existingUser);
 
-		Set<ProfileImageE> userProfileImages = existingUser.getProfileImages();
+		/*Set<ProfileImageE> userProfileImages = existingUser.getProfileImages();
 		userProfileImages.forEach(m -> {
 			m.setUser(savedUser);
 		});
 
-		userImageRepo.saveAll(userProfileImages);
+		userImageRepo.saveAll(userProfileImages);*/
 
 		return Optional.of(ProfileMapper.convert(savedUser));
 	}

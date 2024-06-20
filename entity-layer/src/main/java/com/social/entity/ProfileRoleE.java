@@ -22,8 +22,8 @@ public class ProfileRoleE
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "user_a_id")
-	private ProfileE userId;
+	@JoinColumn(name = "user_a_id", referencedColumnName = "id")
+	private ProfileE user;
 
 	@Column
 	private String role;

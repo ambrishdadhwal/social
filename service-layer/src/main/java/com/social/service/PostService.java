@@ -1,81 +1,90 @@
 package com.social.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
-import com.social.repository.ProfileImageRepo;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import com.social.commonutils.UserPostMapper;
 import com.social.domain.UserPost;
 import com.social.entity.ProfileE;
+import com.social.entity.ProfileImageE;
 import com.social.entity.UserPostE;
+import com.social.repository.ProfileImageRepo;
 import com.social.repository.UserPostRepo;
 import com.social.repository.UserRepo;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class PostService implements IPostService {
+public class PostService implements IPostService
+{
 
-    final UserPostRepo postRepo;
+	final UserPostRepo postRepo;
 
-    final UserRepo userRepo;
+	final UserRepo userRepo;
 
-    final ProfileImageRepo imageRepo;
+	final ProfileImageRepo imageRepo;
 
-    @Override
-    public Optional<UserPost> addUserPost(UserPost profilePost) {
-        UserPostE profilePostE = UserPostMapper.convertEntity(profilePost);
-        profilePostE.setCreatedTime(LocalDateTime.now());
-        profilePostE.setModifiedTime(LocalDateTime.now());
+	@Override
+	public Optional<UserPost> addUserPost(UserPost profilePost)
+	{
+		UserPostE profilePostE = UserPostMapper.convertEntity(profilePost);
+		profilePostE.setCreatedTime(LocalDateTime.now());
+		profilePostE.setModifiedTime(LocalDateTime.now());
 
-        Optional<ProfileE> profile = userRepo.findById(profilePost.getUserId());
-        profilePostE.getImages().forEach(m -> {
-            m.setUser(profile.get());
-        });
+		Optional<ProfileE> profile = userRepo.findById(profilePost.getUserId());
+		profilePostE.getImages().forEach(m -> {
+			m.setUser(profile.get());
+		});
 
-        Optional<UserPost> result = Optional.empty();
-        if (profile.isPresent()) {
-            profilePostE.setUser(profile.get());
-            log.info("Profile ID ---------- {}", profile.get().getId());
-            profilePostE = postRepo.save(profilePostE);
-            try {
-                final UserPostE savedPost = profilePostE;
-                profilePostE.getImages().forEach(m -> {
-                    m.setUser(profile.get());
-                    m.setPost(savedPost);
+		Optional<UserPost> result = Optional.empty();
+		if (profile.isPresent())
+		{
+			profilePostE.setUser(profile.get());
+			profilePostE = postRepo.save(profilePostE);
+			try
+			{
+				final UserPostE savedPost = profilePostE;
+				List<ProfileImageE> images =  new ArrayList<>(profilePostE.getImages());
+				images.forEach(m -> {
+					m.setUser(profile.get());
+					m.setPost(savedPost);
+					imageRepo.save(m);
+				});
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 
-                    imageRepo.save(m);
-                    log.info("Post successly save in Image entity :");
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+			result = Optional.of(UserPostMapper.convert(profilePostE));
+		}
+		return result;
+	}
 
+	@Override
+	public List<UserPost> getAllUserPost(UserPost profilePost)
+	{
+		return null;
+	}
 
-            result = Optional.of(UserPostMapper.convert(profilePostE));
-        }
-        return result;
-    }
+	@Override
+	public UserPost getUserPostById(UserPost profilePost)
+	{
+		return null;
+	}
 
-    @Override
-    public List<UserPost> getAllUserPost(UserPost profilePost) {
-        return null;
-    }
-
-    @Override
-    public UserPost getUserPostById(UserPost profilePost) {
-        return null;
-    }
-
-    @Override
-    public Optional<UserPost> deleteUserPost(UserPost profilePost) {
-        return Optional.empty();
-    }
+	@Override
+	public Optional<UserPost> deleteUserPost(UserPost profilePost)
+	{
+		return Optional.empty();
+	}
 
 }

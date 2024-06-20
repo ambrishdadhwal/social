@@ -1,6 +1,7 @@
 package com.social.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.*;
@@ -35,8 +36,8 @@ public class UserPostE
 	@Column
 	private String postData;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<ProfileImageE> images;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "post")
+	private Set<ProfileImageE> images = new HashSet<>();
 
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)

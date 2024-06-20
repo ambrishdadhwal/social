@@ -2,6 +2,8 @@ package com.social.entity;
 
 import java.time.LocalDateTime;
 
+import com.social.domain.ImageType;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,10 +26,11 @@ public class ProfileImageE
 	private Long id;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_a_id", referencedColumnName = "id")
+	@JoinColumn(name = "social_user_id", referencedColumnName = "id")
 	private ProfileE user;
 
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "social_post_id", referencedColumnName = "id")
 	private UserPostE post;
 
 	@Column
@@ -37,7 +40,7 @@ public class ProfileImageE
 	private String imageDescription;
 
 	@Column
-	private String imageType;
+	private ImageType imageType;
 
 	@Column
 	private byte[] image;
