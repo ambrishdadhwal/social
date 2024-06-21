@@ -21,8 +21,12 @@ public class ProfileRoleE
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	//after
+//	@JoinColumn(name = "user_a_id", referencedColumnName = "id")
+	
+	//before
+	@JoinColumn(name = "user_a_id")
 	@ManyToOne
-	@JoinColumn(name = "user_a_id", referencedColumnName = "id")
 	private ProfileE user;
 
 	@Column

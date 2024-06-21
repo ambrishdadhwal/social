@@ -25,12 +25,12 @@ public class ProfileImageE
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "social_user_id", referencedColumnName = "id")
+	@ManyToOne()
+	@JoinColumn(name = "social_user_id")
 	private ProfileE user;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "social_post_id", referencedColumnName = "id")
+	@ManyToOne()
+	@JoinColumn(name = "social_post_id")
 	private UserPostE post;
 
 	@Column
@@ -40,6 +40,7 @@ public class ProfileImageE
 	private String imageDescription;
 
 	@Column
+	@Enumerated(EnumType.STRING)
 	private ImageType imageType;
 
 	@Column

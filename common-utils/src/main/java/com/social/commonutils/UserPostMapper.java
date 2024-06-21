@@ -1,5 +1,6 @@
 package com.social.commonutils;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -147,6 +148,8 @@ public class UserPostMapper
 		return UserPostE.builder()
 			.postData(from.getPost())
 			.images(from.getImages().stream().map(UserPostMapper::convert).collect(Collectors.toSet()))
+			.createdTime(LocalDateTime.now())
+			.modifiedTime(LocalDateTime.now())
 			.build();
 	}
 

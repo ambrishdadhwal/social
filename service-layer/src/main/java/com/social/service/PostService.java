@@ -1,10 +1,8 @@
 package com.social.service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -36,8 +34,6 @@ public class PostService implements IPostService
 	public Optional<UserPost> addUserPost(UserPost profilePost)
 	{
 		UserPostE profilePostE = UserPostMapper.convertEntity(profilePost);
-		profilePostE.setCreatedTime(LocalDateTime.now());
-		profilePostE.setModifiedTime(LocalDateTime.now());
 
 		Optional<ProfileE> profile = userRepo.findById(profilePost.getUserId());
 		profilePostE.getImages().forEach(m -> {
@@ -49,21 +45,6 @@ public class PostService implements IPostService
 		{
 			profilePostE.setUser(profile.get());
 			profilePostE = postRepo.save(profilePostE);
-			try
-			{
-				final UserPostE savedPost = profilePostE;
-				List<ProfileImageE> images =  new ArrayList<>(profilePostE.getImages());
-				images.forEach(m -> {
-					m.setUser(profile.get());
-					m.setPost(savedPost);
-					imageRepo.save(m);
-				});
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-
 			result = Optional.of(UserPostMapper.convert(profilePostE));
 		}
 		return result;

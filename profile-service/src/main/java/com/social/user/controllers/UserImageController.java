@@ -18,7 +18,9 @@ import com.social.domain.Profile;
 import com.social.domain.ProfileImage;
 import com.social.presentation.ProfileDTO;
 import com.social.service.IUserImageService;
+import com.social.service.ProfileException;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -45,8 +47,14 @@ public class UserImageController
 
 	@PostMapping(value = "/{userId}/image", produces = "application/json")
 	public ResponseEntity<ProfileDTO> uploadImage(@PathVariable("userId") Long userId, @RequestParam("file") MultipartFile file,
-		@RequestParam("imageName") String imageName)
+		@RequestParam("imageName") String imageName, HttpServletRequest httpRequest) throws ProfileException
 	{
+		Profile hhtpProfile = (Profile)httpRequest.getAttribute("CurrentUser");
+		if(!userId.equals(hhtpProfile.getId()))
+		{
+			throw new ProfileException("You can only create post with Logged In User");
+		}
+		
 		ProfileImage image = ProfileImage.builder().userId(userId).build();
 
 		Optional<Profile> profile = imageService.uploadUserImage(image, file);

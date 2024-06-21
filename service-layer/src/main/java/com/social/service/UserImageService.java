@@ -4,16 +4,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.social.commonutils.ProfileMapper;
 import com.social.domain.ImageType;
 import com.social.domain.Profile;
 import com.social.domain.ProfileImage;
+import com.social.repository.ProfileImageRepo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +25,8 @@ public class UserImageService implements IUserImageService
 {
 
 	private final IUserService userService;
+
+	private final ProfileImageRepo imageRepo;
 
 	public static final String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
 
@@ -43,9 +45,8 @@ public class UserImageService implements IUserImageService
 				fileNames.append(file.getOriginalFilename());
 				Files.write(fileNameAndPath, file.getBytes());
 
-				existingProfile.setProfileImage(fileNameAndPath.toString());
-
 				ProfileImage profileImage = ProfileImage.builder()
+					.profile(existingProfile)
 					.imageName(file.getOriginalFilename())
 					.imageDescription(fileNameAndPath.toString())
 					.imageType(ImageType.PROFILE_PIC)
@@ -53,12 +54,9 @@ public class UserImageService implements IUserImageService
 					.modifyDateTime(LocalDateTime.now())
 					.build();
 
-				Set<ProfileImage> existing = existingProfile.getProfileImages();
+				imageRepo.save(ProfileMapper.convert(profileImage));
 
-				existing.add(profileImage);
-
-				existingProfile.setProfileImages(existing);
-				return userService.updateUser(existingProfile);
+				return userService.getUserbyId(existingProfile.getId());
 			}
 			catch (Exception e)
 			{

@@ -1,9 +1,9 @@
 package com.social.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -113,12 +113,12 @@ public class UserService implements IUserService
 		existingUser.setModifiedDateTime(LocalDateTime.now());
 		ProfileE savedUser = userRepo.save(existingUser);
 
-		/*Set<ProfileImageE> userProfileImages = existingUser.getProfileImages();
+		List<ProfileImageE> userProfileImages = new ArrayList<>(existingUser.getProfileImages());
 		userProfileImages.forEach(m -> {
 			m.setUser(savedUser);
 		});
 
-		userImageRepo.saveAll(userProfileImages);*/
+		userImageRepo.saveAll(userProfileImages);
 
 		return Optional.of(ProfileMapper.convert(savedUser));
 	}

@@ -30,14 +30,18 @@ public class UserPostE
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "user_a_id", referencedColumnName = "id")
+	@JoinColumn(name = "user_a_id")
 	private ProfileE user;
 
 	@Column
 	private String postData;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "post")
-	private Set<ProfileImageE> images = new HashSet<>();
+	/*
+	 * To save Child objects automatically.Don't use mappedBy attribute , use JoinColumn on both sides i.e OneToMany & ManyToOne
+	 * */
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "social_post_id", referencedColumnName = "id")
+	private Set<ProfileImageE> images;
 
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)

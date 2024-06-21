@@ -65,7 +65,8 @@ public class ProfileE
 	@Column
 	private String profileImage;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "social_user_id", referencedColumnName = "id")
 	private Set<ProfileImageE> profileImages;
 
 	@Column
@@ -82,7 +83,11 @@ public class ProfileE
 	@Column
 	private LocalDate dob;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+	//after
+//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+	//before
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_a_id", referencedColumnName = "id")
 	private Set<ProfileRoleE> userRoles;
 
 	@Column
