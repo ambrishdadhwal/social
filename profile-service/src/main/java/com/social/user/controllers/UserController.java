@@ -2,7 +2,6 @@ package com.social.user.controllers;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +22,7 @@ import com.social.commonutils.ProfileMapper;
 import com.social.domain.Profile;
 import com.social.presentation.CommonResponse;
 import com.social.presentation.ProfileDTO;
+import com.social.presentation.ProfileUpdateDTO;
 import com.social.service.IUserService;
 
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,7 @@ public class UserController
 	{
 		List<Profile> users = userService.allUsers();
 		CommonResponse<List<ProfileDTO>> dto = new CommonResponse<>();
-		dto.setData(users.stream().map(ProfileMapper::convertDTO).collect(Collectors.toList()));
+		dto.setData(users.stream().map(ProfileMapper::convertDTO).toList());
 		dto.setStatus(HttpStatus.OK);
 		return dto;
 	}
@@ -66,9 +67,10 @@ public class UserController
 		return new ResponseEntity<>(userService.totalSocialUsers(), HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
-	public ResponseEntity<CommonResponse<ProfileDTO>> updateUser(@PathVariable Long id, @RequestBody @Validated ProfileDTO user)
+	@PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
+	public ResponseEntity<CommonResponse<ProfileDTO>> updateUser(@PathVariable("id") Long id, @RequestBody @Validated ProfileUpdateDTO user)
 	{
+		user.setId(id);
 		Optional<Profile> newUser = userService.updateUser(ProfileMapper.convert(user));
 		if (newUser.isPresent())
 		{

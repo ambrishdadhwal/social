@@ -17,6 +17,7 @@ import com.social.presentation.ImageTypeDTO;
 import com.social.presentation.ProfileDTO;
 import com.social.presentation.ProfileImageDTO;
 import com.social.presentation.ProfileLoginDTO;
+import com.social.presentation.ProfileUpdateDTO;
 
 import lombok.experimental.UtilityClass;
 
@@ -220,7 +221,7 @@ public class ProfileMapper
 			.lastName(from.getLastName())
 			.email(from.getEmail())
 			.password(from.getPassword())
-			.country(CountryDTO.getCountry(from.getCountry().getCountry()))
+			.country(CountryDTO.getCountry(from.getCountry().toString()))
 			.dob(from.getDob())
 			.roles(from.getRoles())
 			.profileImage(from.getProfileImage())
@@ -241,6 +242,22 @@ public class ProfileMapper
 			.email(from.getEmail())
 			.userName(from.getUserName())
 			.password(from.getPassword())
+			.build();
+	}
+
+	public static Profile convert(ProfileUpdateDTO from)
+	{
+		if (from == null)
+		{
+			return null;
+		}
+
+		return Profile.builder()
+			.id(from.getId())
+			.firstName(from.getFirstName())
+			.lastName(from.getLastName())
+			.country(Country.getCountry(from.getCountry().toString()))
+			.dob(from.getDob())
 			.build();
 	}
 

@@ -3,8 +3,6 @@ package com.social.security;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +22,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.social.security.filters.ProfileAuthenticationEntryPoint;
 import com.social.security.jwt.JwtRequestFilter;
@@ -36,7 +33,7 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableMethodSecurity(prePostEnabled = true)
-public class SecurityConfigNew
+public class SocialSecurityConfig
 {
 
 	final ProfileAuthenticationEntryPoint authenticationEntryPoint;
@@ -116,9 +113,9 @@ public class SecurityConfigNew
 	{
 		return new BCryptPasswordEncoder();
 	}
-	
-	//@Bean
-	//@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+
+	// @Bean
+	// @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 	RequestContext requestContext()
 	{
 		return new RequestContext();

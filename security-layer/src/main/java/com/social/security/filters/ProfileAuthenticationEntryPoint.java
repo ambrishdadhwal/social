@@ -25,16 +25,6 @@ public class ProfileAuthenticationEntryPoint extends BasicAuthenticationEntryPoi
 		HttpServletResponse response,
 		AuthenticationException authEx) throws IOException
 	{
-		/*	log.error("Inside ProfileAuthenticationEntryPoint.BasicAuthenticationEntryPoint .....");
-			response.setContentType("application/json");
-			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			response.getOutputStream().println(
-				"{ "
-					+ "\"error\": \"" + authEx.getMessage() + "\",\n "
-					+ "\"time\": \"" + LocalDateTime.now() + "\",\n"
-					+ "\"url\": \"" + request.getRequestURI() + "\",\n "
-					+ "}");*/
-
 		log.error("Inside ProfileAuthenticationEntryPoint.commence ....Unauthorized error: {}", authEx.getMessage());
 
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);

@@ -2,7 +2,6 @@ package com.social.security;
 
 import java.util.Collection;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,17 +11,18 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class ProfileAuthentiationProvider implements AuthenticationProvider
 {
 
-	@Autowired
-	private CustomUserDetailsService userService;
+	private final CustomUserDetailsService userService;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException
 	{
-		System.out.println("Inside ProfileAuthentiationProvider.authenticate .....");
 		String username = authentication.getName();
 		String password = (String)authentication.getCredentials();
 
@@ -30,12 +30,12 @@ public class ProfileAuthentiationProvider implements AuthenticationProvider
 
 		if (user == null || !user.getUsername().equalsIgnoreCase(username))
 		{
-			throw new BadCredentialsException("###...Username not found...###");
+			throw new BadCredentialsException(username.concat(" - Username not found."));
 		}
 
 		if (!password.equals(user.getPassword()))
 		{
-			throw new BadCredentialsException("###...Wrong password...###");
+			throw new BadCredentialsException("Wrong password.");
 		}
 
 		Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
@@ -46,7 +46,6 @@ public class ProfileAuthentiationProvider implements AuthenticationProvider
 	@Override
 	public boolean supports(Class<?> authentication)
 	{
-		// TODO Auto-generated method stub
 		return true;
 	}
 

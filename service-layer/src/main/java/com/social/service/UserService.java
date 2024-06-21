@@ -109,18 +109,20 @@ public class UserService implements IUserService
 	@Override
 	public Optional<Profile> updateUser(Profile user)
 	{
-		ProfileE existingUser = ProfileMapper.convert(user);
-		existingUser.setModifiedDateTime(LocalDateTime.now());
-		ProfileE savedUser = userRepo.save(existingUser);
+		Optional<ProfileE> existingDBUser = userRepo.findById(user.getId());
 
-		List<ProfileImageE> userProfileImages = new ArrayList<>(existingUser.getProfileImages());
-		userProfileImages.forEach(m -> {
-			m.setUser(savedUser);
-		});
-
-		userImageRepo.saveAll(userProfileImages);
-
-		return Optional.of(ProfileMapper.convert(savedUser));
+		if (existingDBUser.isPresent())
+		{
+			ProfileE profile = existingDBUser.get();
+			profile.setFirstName(user.getFirstName());
+			profile.setLastName(user.getLastName());
+			profile.setCountry(user.getCountry());
+			profile.setDob(user.getDob());
+			profile.setModifiedDateTime(LocalDateTime.now());
+			ProfileE savedUser = userRepo.save(profile);
+			return Optional.of(ProfileMapper.convert(savedUser));
+		}
+		return Optional.empty();
 	}
 
 	@Override
