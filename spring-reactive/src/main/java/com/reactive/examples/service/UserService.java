@@ -64,7 +64,7 @@ public class UserService {
         return Flux.fromIterable(userIds)
                 .parallel()
                 .runOn(Schedulers.boundedElastic())
-                .flatMap(i -> findById(i))
+                .flatMap(this::findById)
                 .ordered((u1, u2) -> u2.getId() - u1.getId());
     }
 

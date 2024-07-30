@@ -63,6 +63,8 @@ public class SocialSecurityConfig
 				.requestMatchers(HttpMethod.GET, "/actuator/**").permitAll()
 				.requestMatchers(HttpMethod.GET, "/index/**").permitAll()
 				.requestMatchers(HttpMethod.GET, "/register/**").permitAll()
+				.requestMatchers(HttpMethod.GET, "/mvc/**").permitAll()
+				.requestMatchers(HttpMethod.POST, "/mvc/**").permitAll()
 				.anyRequest().authenticated())
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

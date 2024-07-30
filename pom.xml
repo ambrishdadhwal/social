@@ -41,6 +41,12 @@
     </modules>
 
     <dependencies>
+
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-brave</artifactId>
+		</dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -56,7 +62,7 @@
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
 
-        <!-- Micrometer Prometheus registry -->
+		<!-- Micrometer Prometheus registry -->
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
@@ -85,13 +91,13 @@
         </dependency>
 
 
-        <!--Below commented dependencies are used in older version of Spring  < 3-->
-        <!-- <dependency> <groupId>io.springfox</groupId> <artifactId>springfox-swagger2</artifactId>
+		<!--Below commented dependencies are used in older version of Spring  < 3-->
+		<!-- <dependency> <groupId>io.springfox</groupId> <artifactId>springfox-swagger2</artifactId>
             <version>3.0.0</version> </dependency> <dependency> <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId> <version>3.0.0</version>
             </dependency> <dependency> <groupId>io.springfox</groupId> <artifactId>springfox-swagger-ui</artifactId>
             <version>3.0.0</version> </dependency> -->
-        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+		<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>

@@ -1,4 +1,4 @@
-package com.social.user.controllers;
+package com.social.user.restcontrollers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

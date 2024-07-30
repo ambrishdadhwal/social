@@ -1,4 +1,4 @@
-package com.social.user.controllers;
+package com.social.user.restcontrollers;
 
 import java.util.List;
 import java.util.Optional;

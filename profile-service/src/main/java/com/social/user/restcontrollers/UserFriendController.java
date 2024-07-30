@@ -1,4 +1,4 @@
-package com.social.user.controllers;
+package com.social.user.restcontrollers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

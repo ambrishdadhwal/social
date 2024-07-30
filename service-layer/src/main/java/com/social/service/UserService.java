@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.social.commonutils.ProfileMapper;
@@ -16,6 +17,7 @@ import com.social.repository.ProfileImageRepo;
 import com.social.repository.ProfileRepo;
 import com.social.repository.UserRepo;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 
 @Service("profileService")
@@ -68,7 +70,7 @@ public class UserService implements IUserService
 		return false;
 	}*/
 
-	// @Cacheable(value = "data", key = "'all-users'")
+	@Cacheable(value = "all-users")
 	public List<Profile> allUsers()
 	{
 		return userRepo.findAll().stream().map(ProfileMapper::convert).collect(Collectors.toList());
@@ -80,7 +82,7 @@ public class UserService implements IUserService
 	}
 
 	@Override
-	public Optional<Profile> getUserbyUserNameAndId(String userName, Long userId)
+	public Optional<Profile> getUserbyUserNameAndId(@NotEmpty String userName, Long userId)
 	{
 		return allUsers().stream()
 			.filter(n -> n.getEmail().equals(userName) && n.getId().equals(userId))
