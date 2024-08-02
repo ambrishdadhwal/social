@@ -1,5 +1,6 @@
 package com.social.user.restcontrollers;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -29,8 +30,6 @@ import lombok.RequiredArgsConstructor;
 public class UserImageController
 {
 
-	public static final String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
-
 	private final IUserImageService imageService;
 
 	@GetMapping(value = "{userId}/image/{imageId}", consumes = "application/json", produces = "application/json")
@@ -47,7 +46,7 @@ public class UserImageController
 
 	@PostMapping(value = "/{userId}/image", produces = "application/json")
 	public ResponseEntity<ProfileDTO> uploadImage(@PathVariable("userId") Long userId, @RequestParam("file") MultipartFile file,
-		@RequestParam("imageName") String imageName, HttpServletRequest httpRequest) throws ProfileException
+		@RequestParam("imageName") String imageName, HttpServletRequest httpRequest) throws ProfileException, IOException
 	{
 		Profile hhtpProfile = (Profile)httpRequest.getAttribute("CurrentUser");
 		if(!userId.equals(hhtpProfile.getId()))

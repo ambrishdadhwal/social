@@ -7,6 +7,7 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,8 +22,10 @@ public class ProfileUtils<T>
 
 	public static final String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
 
-	public static Set<ProfileImageDTO> createImages(MultipartFile[] files)
+	public static Set<ProfileImageDTO> createImages(MultipartFile[] files) throws IOException
 	{
+		Files.createDirectories(Paths.get(UPLOAD_DIRECTORY));
+
 		Set<ProfileImageDTO> images = new HashSet<>();
 		if (files != null)
 		{

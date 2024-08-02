@@ -26,11 +26,7 @@ public class CacheService
 	@Cacheable(key = "'person'")
 	public ProfileDTO addPersonToSpringCache()
 	{
-		return ProfileDTO.builder()
-			.firstName("Spring firstname")
-			.lastName("Spring lastname")
-			.email("spring@test.com")
-			.build();
+		return new ProfileDTO();
 	}
 
 	/*
@@ -39,11 +35,7 @@ public class CacheService
 	@Cacheable(key = "'person-1'")
 	public ProfileDTO addPersonToRedisCache()
 	{
-		return ProfileDTO.builder()
-			.firstName("Redis firstname")
-			.lastName("Redis lastname")
-			.email("redis@test.com")
-			.build();
+		return new ProfileDTO();
 	}
 
 	/* when we need both annotations @CachePut or @CacheEvict
@@ -77,11 +69,7 @@ public class CacheService
 	@CachePut(key = "'person-1'") // updating cache
 	public ProfileDTO updatePerson(String email)
 	{
-		return ProfileDTO.builder()
-			.firstName("Ambrish")
-			.lastName("Dadhwal")
-			.email(email)
-			.build();
+		return new ProfileDTO();
 	}
 
 	public void clearRedisCache()

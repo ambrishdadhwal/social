@@ -70,7 +70,7 @@ public class UserService implements IUserService
 		return false;
 	}*/
 
-	@Cacheable(value = "all-users")
+	//@Cacheable(value = "all-users")
 	public List<Profile> allUsers()
 	{
 		return userRepo.findAll().stream().map(ProfileMapper::convert).collect(Collectors.toList());

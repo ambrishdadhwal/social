@@ -65,6 +65,8 @@ public class SocialSecurityConfig
 				.requestMatchers(HttpMethod.GET, "/register/**").permitAll()
 				.requestMatchers(HttpMethod.GET, "/mvc/**").permitAll()
 				.requestMatchers(HttpMethod.POST, "/mvc/**").permitAll()
+				.requestMatchers(HttpMethod.GET, "/gen-ai/**").permitAll()
+				.requestMatchers(HttpMethod.POST, "/gen-ai/**").permitAll()
 				.anyRequest().authenticated())
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

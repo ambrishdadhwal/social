@@ -215,7 +215,7 @@ public class ProfileMapper
 			images = from.getProfileImages().stream().map(ProfileMapper::convertDTO).collect(Collectors.toSet());
 		}
 
-		return ProfileDTO.builder()
+		/*return ProfileDTO.builder()
 			.id(from.getId())
 			.firstName(from.getFirstName())
 			.lastName(from.getLastName())
@@ -229,7 +229,24 @@ public class ProfileMapper
 			.createDateTime(from.getCreateDateTime())
 			.modifyDateTime(from.getModifiedDateTime())
 			.isActive(from.getIsActive())
-			.build();
+			.build();*/
+		
+		ProfileDTO profileDTO =new ProfileDTO();
+		profileDTO.setId(from.getId());
+		profileDTO.setFirstName(from.getFirstName());
+		profileDTO.setLastName(from.getLastName());
+		profileDTO.setEmail(from.getEmail());
+		profileDTO.setPassword(from.getPassword());
+		profileDTO.setCountry(CountryDTO.getCountry(from.getCountry().toString()));
+		profileDTO.setDob(from.getDob());
+		profileDTO.setRoles(from.getRoles());
+		profileDTO.setProfileImage(from.getProfileImage());
+		profileDTO.setProfileImages(images);
+		profileDTO.setCreateDateTime(from.getCreateDateTime());
+		profileDTO.setModifyDateTime(from.getModifiedDateTime());
+		profileDTO.setIsActive(from.getIsActive());
+		
+		return profileDTO;
 	}
 
 	public static Profile convert(ProfileLoginDTO from)

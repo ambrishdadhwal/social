@@ -1,5 +1,6 @@
 package com.social.user.restcontrollers;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -58,7 +59,7 @@ public class UserPostController
 	@PostMapping(value = "/{userId}/post", produces = "application/json")
 	public ResponseEntity<UserPostDTO> addPostForUser(@PathVariable("userId") Long userId,
 		@RequestParam(name = "post") String post,
-		@RequestParam(name = "file", required = false) MultipartFile[] files, HttpServletRequest httpRequest) throws ProfileException
+		@RequestParam(name = "file", required = false) MultipartFile[] files, HttpServletRequest httpRequest) throws ProfileException, IOException
 	{
 		Profile profile = (Profile)httpRequest.getAttribute("CurrentUser");
 		if(!userId.equals(profile.getId()))

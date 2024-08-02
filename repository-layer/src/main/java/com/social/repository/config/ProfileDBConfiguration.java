@@ -27,7 +27,7 @@ public class ProfileDBConfiguration
 	{
 		log.info("###...Dev Profile is active...###");
 		DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
-		dataSourceBuilder.driverClassName("spring.datasource.driverClassName");
+		dataSourceBuilder.driverClassName(env.getProperty("spring.datasource.driverClassName"));
 		dataSourceBuilder.url(env.getProperty("spring.datasource.url"));
 		dataSourceBuilder.username(env.getProperty("spring.datasource.username"));
 		dataSourceBuilder.password(env.getProperty("spring.datasource.password"));

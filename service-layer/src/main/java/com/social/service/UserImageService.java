@@ -1,5 +1,6 @@
 package com.social.service;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,8 +32,9 @@ public class UserImageService implements IUserImageService
 	public static final String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
 
 	@Override
-	public Optional<Profile> uploadUserImage(ProfileImage image, MultipartFile file)
+	public Optional<Profile> uploadUserImage(ProfileImage image, MultipartFile file) throws IOException
 	{
+		Files.createDirectories(Paths.get(UPLOAD_DIRECTORY));
 		Optional<Profile> profile = userService.getUserbyId(image.getUserId());
 
 		if (profile.isPresent())

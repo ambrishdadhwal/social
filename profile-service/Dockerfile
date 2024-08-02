@@ -10,5 +10,5 @@ ENTRYPOINT ["java",\
 "-XX:+UseParallelGC",\
 "-Xms256m",\
 "-Xmx512m",\
-"-Dspring.profiles.active=h2",\
+"-Dspring.profiles.active=dev",\
 "-jar","/app.jar"]
