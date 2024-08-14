@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 import com.social.entity.UserFriendE;
-import com.social.repository.UserFriendRepo;
-import com.social.repository.UserRepo;
+import com.social.repository.postgres.UserFriendRepo;
+import com.social.repository.postgres.UserRepo;
 
 import lombok.RequiredArgsConstructor;
 

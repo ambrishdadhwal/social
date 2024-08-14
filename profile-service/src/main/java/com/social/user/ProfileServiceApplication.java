@@ -18,7 +18,7 @@ import org.springframework.retry.annotation.EnableRetry;
 import com.social.domain.Country;
 import com.social.domain.Gender;
 import com.social.entity.ProfileE;
-import com.social.repository.UserRepo;
+import com.social.repository.postgres.UserRepo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

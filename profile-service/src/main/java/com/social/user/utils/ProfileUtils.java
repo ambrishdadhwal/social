@@ -1,11 +1,7 @@
 package com.social.user.utils;
 
-import com.social.domain.ProfileImage;
-import com.social.presentation.ImageTypeDTO;
-import com.social.presentation.ProfileImageDTO;
-import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.multipart.MultipartFile;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,6 +10,18 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import com.social.presentation.ImageTypeDTO;
+import com.social.presentation.ProfileDTO;
+import com.social.presentation.ProfileImageDTO;
+import com.social.presentation.ProfileLoginDTO;
+import com.social.user.restcontrollers.UserController;
+import com.social.user.restcontrollers.UserLoginController;
+
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 
 @UtilityClass
 @Slf4j
@@ -54,5 +62,18 @@ public class ProfileUtils<T>
 			}
 		}
 		return images;
+	}
+
+	public static void addLinkToUser(ProfileDTO user)
+	{
+		try
+		{
+			user.add(linkTo(UserController.class).slash(user.getId()).withSelfRel());
+			user.add(linkTo(methodOn(UserController.class).getUsers()).withRel("users"));
+			user.add(linkTo(methodOn(UserLoginController.class).getUserToken(ProfileLoginDTO.builder().build())).withRel("login-token"));
+		}
+		catch (Exception e)
+		{
+		}
 	}
 }

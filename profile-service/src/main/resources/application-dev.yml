@@ -1,0 +1,60 @@
+spring:
+   datasource:
+      url: jdbc:postgresql://localhost:5432/social
+      username: postgres
+      password: mohit123
+      driverClassName: org.postgresql.Driver
+   jpa:
+      show-sql: true
+      properties:
+         hibernate:
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            format_sql: true
+         show_sql: true
+   defer-datasource-initialization: true
+   hibernate.ddl-auto: create
+   sql:
+      init:
+         mode: always
+         schema-locations: classpath:/sql/schema.sql
+   h2:
+      console:
+         path: /h2-console
+######Thymleaf#####
+   thymeleaf:
+      prefix: classpath:/templates/
+      suffix: .html
+#####Redis######
+   cache:
+      type: redis
+   redis:
+      host: localhost
+      port: 6379
+
+management:
+   endpoints:
+      web:
+         exposure:
+            include: '*'
+   health:
+      show-details: always
+
+######Databases#####
+social:
+   database:
+   -  type: POSTGRES
+      identifier: postgres
+      url: jdbc:postgresql://localhost:5432/social
+      username: postgres
+      password: mohit123
+      driverClassName: org.postgresql.Driver
+      connections: 10
+      minimumIdle: 7
+   -  type: MARIA
+      identifier: maria
+      url: jdbc:mariadb://localhost:3306/social
+      username: root
+      password: mohit123
+      driverClassName: org.mariadb.jdbc.Driver
+      connections: 10
+      minimumIdle: 7

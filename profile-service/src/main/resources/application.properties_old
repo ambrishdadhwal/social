@@ -2,12 +2,12 @@ spring.application.name=Profile
 server.servlet.contextPath=/social/profile-service
 server.port=9091
 server.error.path=/error2
-logging.level.root=ERROR
-logging.level.org.springframework.boot=ERROR
-logging.level.org.springframework.web=ERROR
-logging.level.com.social=DEBUG
-logging.level.org.hibernate=ERROR
-#spring.profiles.active=dev
+#logging.level.root=ERROR
+#logging.level.org.springframework.boot=ERROR
+#logging.level.org.springframework.web=ERROR
+#logging.level.com.social=DEBUG
+#logging.level.org.hibernate=ERROR
+spring.profiles.active=dev
 spring.security.user.name=user
 spring.security.user.password=pass
 security.basic.enabled=true
@@ -56,13 +56,13 @@ eureka.instance.prefer-ip-address=false
 eureka.client.register-with-eureka=false
 logging.level.com.netflix.eureka=OFF
 logging.level.com.netflix.discovery=OFF
+cache.redis.enable=false
+cache.simple.enable=true
 
 ####Multipart Configs
 spring.servlet.multipart.max-file-size=50MB
 spring.servlet.multipart.max-request-size=50MB
 spring.cache.redis.enable-statistics=true
-cache.redis.enable=false
-cache.simple.enable=true
 
 #GenAI
 SPRING_AI_OPENAI_API_KEY=

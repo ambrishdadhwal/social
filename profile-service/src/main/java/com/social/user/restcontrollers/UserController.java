@@ -1,13 +1,10 @@
 package com.social.user.restcontrollers;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static com.social.user.utils.ProfileUtils.addLinkToUser;
 
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,7 +24,6 @@ import com.social.commonutils.ProfileMapper;
 import com.social.domain.Profile;
 import com.social.presentation.CommonResponse;
 import com.social.presentation.ProfileDTO;
-import com.social.presentation.ProfileLoginDTO;
 import com.social.presentation.ProfileUpdateDTO;
 import com.social.service.IUserService;
 
@@ -48,14 +44,7 @@ public class UserController
 		List<Profile> users = userService.allUsers();
 		List<ProfileDTO> response = users.stream().map(ProfileMapper::convertDTO).toList();
 		response.forEach(n -> {
-			try
-			{
-				addLinkToUser(n);
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
+			addLinkToUser(n);
 		});
 		CommonResponse<List<ProfileDTO>> dto = new CommonResponse<>();
 		// CollectionModel<ProfileDTO> collectionModel = CollectionModel.of(response);
@@ -120,13 +109,6 @@ public class UserController
 	{
 		userService.deleteUserById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-
-	private void addLinkToUser(ProfileDTO user) throws Exception
-	{
-		user.add(linkTo(UserController.class).slash(user.getId()).withSelfRel());
-		user.add(linkTo(methodOn(UserController.class).getUsers()).withRel("users"));
-		user.add(linkTo(methodOn(UserLoginController.class).getUserToken(ProfileLoginDTO.builder().build())).withRel("login-token"));
 	}
 
 }

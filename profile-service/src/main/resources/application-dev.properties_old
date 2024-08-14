@@ -1,11 +1,11 @@
 spring.datasource.url=jdbc:postgresql://localhost:5432/social
 spring.datasource.username=postgres
-spring.datasource.password=postgres
+spring.datasource.password=mohit123
 spring.datasource.driverClassName=org.postgresql.Driver
 hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.format_sql=	
 
 spring.h2.console.path=/h2-console
 management.endpoints.web.exposure.include=*

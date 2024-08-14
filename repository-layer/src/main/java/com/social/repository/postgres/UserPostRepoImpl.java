@@ -1,4 +1,4 @@
-package com.social.repository;
+package com.social.repository.postgres;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

@@ -25,12 +25,6 @@ import io.github.flashvayne.chatgpt.service.ChatgptService;
 public class OpenAIController
 {
 
-	@Value("${openai.model}")
-	private String model;
-
-	@Value("${openai.api.host}")
-	private String host;
-
 	@Autowired
 	private RestTemplate openaiRestTemplate;
 
@@ -75,7 +69,7 @@ public class OpenAIController
 	public ChatResponse completion(@RequestBody @Validated ChatRequest request)
 	{
 		test2();
-		ChatResponse response = openaiRestTemplate.postForObject(host, request, ChatResponse.class);
+		ChatResponse response = openaiRestTemplate.postForObject(baseURL, request, ChatResponse.class);
 
 		if (ObjectUtils.isEmpty(response) || ObjectUtils.isEmpty(response.getChoices()) || response.getChoices().isEmpty())
 		{

@@ -14,7 +14,7 @@ import com.social.commonutils.ProfileMapper;
 import com.social.domain.ImageType;
 import com.social.domain.Profile;
 import com.social.domain.ProfileImage;
-import com.social.repository.ProfileImageRepo;
+import com.social.repository.postgres.ProfileImageRepo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

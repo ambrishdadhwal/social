@@ -11,9 +11,9 @@ import com.social.domain.UserPost;
 import com.social.entity.ProfileE;
 import com.social.entity.ProfileImageE;
 import com.social.entity.UserPostE;
-import com.social.repository.ProfileImageRepo;
-import com.social.repository.UserPostRepo;
-import com.social.repository.UserRepo;
+import com.social.repository.postgres.ProfileImageRepo;
+import com.social.repository.postgres.UserPostRepo;
+import com.social.repository.postgres.UserRepo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,21 +1,18 @@
 package com.social.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.social.commonutils.ProfileMapper;
+import com.social.commonutils.SocialMethodVisit;
 import com.social.domain.Profile;
 import com.social.entity.ProfileE;
-import com.social.entity.ProfileImageE;
-import com.social.repository.ProfileImageRepo;
-import com.social.repository.ProfileRepo;
-import com.social.repository.UserRepo;
+import com.social.repository.postgres.ProfileRepo;
+import com.social.repository.postgres.UserRepo;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +26,7 @@ public class UserService implements IUserService
 
 	private final ProfileRepo profileRepo;
 
-	private final ProfileImageRepo userImageRepo;
-
+	@SocialMethodVisit
 	public Optional<Profile> saveUser(Profile user) throws Exception
 	{
 		Optional<ProfileE> existingUser = userRepo.findByEmail(user.getEmail());
@@ -54,34 +50,20 @@ public class UserService implements IUserService
 		}
 	}
 
-	/*public boolean saveUserRole(SocialUser savedUser)
-	{
-		Long userId = savedUser.getId();
-		
-		savedUser.getRoles().forEach(n->{
-			
-			SocialUserRoleE userRole = SocialUserRoleE.builder()
-				.fbuser(null)
-				.role(n)
-				.build();
-				
-		});
-		
-		return false;
-	}*/
-
-	//@Cacheable(value = "all-users")
+	@SocialMethodVisit
 	public List<Profile> allUsers()
 	{
 		return userRepo.findAll().stream().map(ProfileMapper::convert).collect(Collectors.toList());
 	}
 
+	@SocialMethodVisit
 	public Optional<Profile> getUserbyId(Long userId)
 	{
 		return allUsers().stream().filter(n -> n.getId().equals(userId)).findAny();
 	}
 
 	@Override
+	@SocialMethodVisit
 	public Optional<Profile> getUserbyUserNameAndId(@NotEmpty String userName, Long userId)
 	{
 		return allUsers().stream()
@@ -90,6 +72,7 @@ public class UserService implements IUserService
 	}
 
 	@Override
+	@SocialMethodVisit
 	public Optional<Profile> deleteUserById(Long userId)
 	{
 		Optional<Profile> user = allUsers().stream().filter(n -> n.getId().equals(userId)).findAny();
@@ -109,6 +92,7 @@ public class UserService implements IUserService
 	}
 
 	@Override
+	@SocialMethodVisit
 	public Optional<Profile> updateUser(Profile user)
 	{
 		Optional<ProfileE> existingDBUser = userRepo.findById(user.getId());
@@ -130,29 +114,33 @@ public class UserService implements IUserService
 	@Override
 	public Optional<Profile> getUserbyUserName(String userName)
 	{
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return allUsers().stream().filter(n -> n.getUserName().equals(userName)).findAny();
 	}
 
 	@Override
 	public Optional<Profile> getUserbyEmail(String email)
 	{
-		// TODO Auto-generated method stub
+
 		return Optional.empty();
 	}
 
 	@Override
 	public List<Profile> getUserbyuserEmail(String email)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return allUsers().stream().filter(n -> n.getEmail().equals(email)).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Profile> searchUsers(String search)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getUsersSearchbyName(search);
+	}
+
+	@Override
+	@SocialMethodVisit
+	public List<Profile> getUsersSearchbyName(String name)
+	{
+		return userRepo.findByFirstNameContaining(name).stream().map(ProfileMapper::convert).collect(Collectors.toList());
 	}
 
 }

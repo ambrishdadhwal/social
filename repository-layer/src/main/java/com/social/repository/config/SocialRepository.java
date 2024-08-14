@@ -5,6 +5,7 @@ import java.util.concurrent.CompletableFuture;
 
 import org.apache.groovy.internal.util.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,14 +19,15 @@ public abstract class SocialRepository
 {
 
 	@Autowired
-	protected JdbcTemplate jdbcTemplate;
+	@Qualifier("postgresJdbcTemplate")
+	protected JdbcTemplate postgresJdbcTemplate;
 
 	public <T> CompletableFuture<List<T>> execute(String description, String query, Class<T> t) throws Exception
 	{
 		try
 		{
 			log.info("Query ::: {}", query);
-			return timed(description, () -> jdbcTemplate.query(query, new BeanPropertyRowMapper<>(t)));
+			return timed(description, () -> postgresJdbcTemplate.query(query, new BeanPropertyRowMapper<>(t)));
 		}
 		catch (Exception e)
 		{
@@ -38,7 +40,7 @@ public abstract class SocialRepository
 		try
 		{
 			log.info("Query ::: {}", query);
-			return timed(description, () -> jdbcTemplate.query(query, new BeanPropertyRowMapper<>(t), args.toArray()));
+			return timed(description, () -> postgresJdbcTemplate.query(query, new BeanPropertyRowMapper<>(t), args.toArray()));
 		}
 		catch (Exception e)
 		{

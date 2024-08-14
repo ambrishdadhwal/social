@@ -33,4 +33,6 @@ public interface IUserService
 
 	public List<Profile> searchUsers(String search);
 
+	public List<Profile> getUsersSearchbyName(String name);
+
 }

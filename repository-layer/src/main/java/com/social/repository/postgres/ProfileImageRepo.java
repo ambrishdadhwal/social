@@ -1,4 +1,4 @@
-package com.social.repository;
+package com.social.repository.postgres;
 
 import com.social.entity.ProfileImageE;
 import org.springframework.data.repository.CrudRepository;

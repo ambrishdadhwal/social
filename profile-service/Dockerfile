@@ -1,4 +1,5 @@
 FROM openjdk:17
+LABEL MAINTAINER="Ambrish"
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 EXPOSE 9091

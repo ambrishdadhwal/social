@@ -1,4 +1,4 @@
-package com.social.repository;
+package com.social.repository.postgres;
 
 import com.social.entity.ProfileRoleE;
 import org.springframework.data.jpa.repository.JpaRepository;

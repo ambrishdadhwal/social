@@ -31,7 +31,7 @@ public class UserLoginController
 	final JwtTokenUtil jwtTokenUtil;
 
 	@PostMapping(value = "/")
-	public ResponseEntity<ProfileDTO> createUser(@RequestBody @Validated ProfileLoginDTO user) throws Exception
+	public ResponseEntity<ProfileDTO> login(@RequestBody @Validated ProfileLoginDTO user) throws Exception
 	{
 		HttpStatus status = HttpStatus.OK;
 
