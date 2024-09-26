@@ -1,22 +1,22 @@
 package com.social.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+		import java.util.ArrayList;
+		import java.util.List;
+		import java.util.Optional;
 
-import org.springframework.stereotype.Service;
+		import org.springframework.stereotype.Service;
 
-import com.social.commonutils.UserPostMapper;
-import com.social.domain.UserPost;
-import com.social.entity.ProfileE;
-import com.social.entity.ProfileImageE;
-import com.social.entity.UserPostE;
-import com.social.repository.postgres.ProfileImageRepo;
-import com.social.repository.postgres.UserPostRepo;
-import com.social.repository.postgres.UserRepo;
+		import com.social.commonutils.UserPostMapper;
+		import com.social.domain.UserPost;
+		import com.social.entity.ProfileE;
+		import com.social.entity.ProfileImageE;
+		import com.social.entity.UserPostE;
+		import com.social.repository.postgres.ProfileImageRepo;
+		import com.social.repository.postgres.UserPostRepo;
+		import com.social.repository.postgres.UserRepo;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+		import lombok.RequiredArgsConstructor;
+		import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor

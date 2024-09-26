@@ -69,7 +69,7 @@ public class ProfileUtils<T>
 		try
 		{
 			user.add(linkTo(UserController.class).slash(user.getId()).withSelfRel());
-			user.add(linkTo(methodOn(UserController.class).getUsers()).withRel("users"));
+			user.add(linkTo(methodOn(UserController.class).getUsers(0, 50)).withRel("users"));
 			user.add(linkTo(methodOn(UserLoginController.class).getUserToken(ProfileLoginDTO.builder().build())).withRel("login-token"));
 		}
 		catch (Exception e)

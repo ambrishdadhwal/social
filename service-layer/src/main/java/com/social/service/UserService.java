@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.social.commonutils.ProfileMapper;
@@ -54,6 +57,16 @@ public class UserService implements IUserService
 	public List<Profile> allUsers()
 	{
 		return userRepo.findAll().stream().map(ProfileMapper::convert).collect(Collectors.toList());
+	}
+	
+	@Override
+	@SocialMethodVisit
+	public List<Profile> allUsersPaging(Integer pageNumber, Integer pageSize)
+	{
+		Sort sortByName = Sort.by("firstName","lastName");
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, sortByName);
+		return userRepo.findAll(pageable).getContent().stream().map(ProfileMapper::convert).collect(Collectors.toList());
+		//return userRepo.findAll().stream().map(ProfileMapper::convert).collect(Collectors.toList());
 	}
 
 	@SocialMethodVisit

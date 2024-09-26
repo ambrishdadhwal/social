@@ -35,4 +35,6 @@ public interface IUserService
 
 	public List<Profile> getUsersSearchbyName(String name);
 
+	public List<Profile> allUsersPaging(Integer pageNumber, Integer pageSize);
+
 }

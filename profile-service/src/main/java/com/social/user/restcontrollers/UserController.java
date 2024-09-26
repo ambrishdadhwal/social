@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.social.commonutils.ProfileMapper;
@@ -26,6 +27,7 @@ import com.social.presentation.CommonResponse;
 import com.social.presentation.ProfileDTO;
 import com.social.presentation.ProfileUpdateDTO;
 import com.social.service.IUserService;
+import com.social.user.utils.ProfileUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,22 +41,19 @@ public class UserController
 
 	@GetMapping(value = "/", consumes = "application/json", produces = "application/json")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public CommonResponse<List<ProfileDTO>> getUsers()
+	public CommonResponse<List<ProfileDTO>> getUsers(@RequestParam(name = "pageNumber") Integer pageNumber,
+		@RequestParam(name = "pageSize") Integer pageSize)
 	{
-		List<Profile> users = userService.allUsers();
+		List<Profile> users = userService.allUsersPaging(pageNumber, pageSize);
 		List<ProfileDTO> response = users.stream().map(ProfileMapper::convertDTO).toList();
-		response.forEach(n -> {
-			addLinkToUser(n);
-		});
+		response.forEach(ProfileUtils::addLinkToUser);
 		CommonResponse<List<ProfileDTO>> dto = new CommonResponse<>();
-		// CollectionModel<ProfileDTO> collectionModel = CollectionModel.of(response);
-		// collectionModel.add(linkTo(methodOn(ProfileDTO.class)).withSelfRel());
 		dto.setData(response);
 		dto.setStatus(HttpStatus.OK);
 		return dto;
 	}
 
-	@PreAuthorize("hasAuthority('ROLE_USER1')")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<CommonResponse<ProfileDTO>> getUserById(@PathVariable(required = true, name = "id") Long id)
 	{

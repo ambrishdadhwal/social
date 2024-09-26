@@ -17,8 +17,8 @@ public interface UserRepo extends JpaRepository<ProfileE, Long>
 	@Query(value = "SELECT * FROM social_user WHERE id = ?1", nativeQuery = true)
 	Optional<ProfileE> findById(long userId);
 
-	@Query(value = "SELECT * FROM social_user WHERE email = ?1", nativeQuery = true)
-	Optional<ProfileE> findByEmail(String email);
+	@Query(value = "SELECT p FROM ProfileE p WHERE p.email =:email ")
+	Optional<ProfileE> findByEmail(@Param("email") String email);
 
 	@Query(value = "SELECT * FROM social_user WHERE first_name ilike  %:fName%", nativeQuery = true)
 	List<ProfileE> findByFirstNameContaining(@Param("fName") String fName);
