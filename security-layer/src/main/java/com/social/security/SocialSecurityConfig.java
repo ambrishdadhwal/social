@@ -3,6 +3,8 @@ package com.social.security;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +30,8 @@ import com.social.security.jwt.JwtRequestFilter;
 import com.social.security.jwt.RequestContext;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.annotation.RequestScope;
 
 @Configuration
 @EnableWebSecurity
@@ -47,8 +51,7 @@ public class SocialSecurityConfig
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
 	{
-		http.cors().and().csrf(csrf -> csrf.disable())
-			.headers().disable().exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint))
+		http.csrf(csrf -> csrf.disable()).exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint))
 			.authorizeHttpRequests(auth -> auth.requestMatchers("/h2-console**").permitAll()
 				.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
 				.requestMatchers("/v3/api-docs/**").permitAll()
@@ -118,10 +121,10 @@ public class SocialSecurityConfig
 		return new BCryptPasswordEncoder();
 	}
 
-	// @Bean
-	// @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+	@Bean
 	RequestContext requestContext()
 	{
 		return new RequestContext();
 	}
+
 }

@@ -8,6 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.social.security.CustomUserDetailsService;
@@ -27,6 +29,8 @@ public class JwtRequestFilter extends OncePerRequestFilter
 	private final JwtTokenUtil jwtTokenUtil;
 
 	private final CustomUserDetailsService customUserDetailsService;
+
+	private  final RequestContextHolder requestContextHolder;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException
@@ -68,6 +72,21 @@ public class JwtRequestFilter extends OncePerRequestFilter
 					token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(token);
 				}
+
+				/*ServletRequestAttributes attributes = new ServletRequestAttributes(request, response);
+				RequestContext customContext = new RequestContext();
+				customContext.setEmail(userDetails.getUsername());
+				customContext.setToken(jwtToken);
+				customContext.setAuthorities(userDetails.getAuthorities());
+				attributes.setAttribute("context", customContext, RequestAttributes.SCOPE_REQUEST);
+				RequestContextHolder.setRequestAttributes(attributes);*/
+
+				RequestContext customContext = new RequestContext();
+				customContext.setEmail(userDetails.getUsername());
+				customContext.setToken(jwtToken);
+				customContext.setAuthorities(userDetails.getAuthorities());
+				requestContextHolder.setContext(customContext);
+
 			}
 			chain.doFilter(request, response);
 		}

@@ -2,6 +2,7 @@ package com.social.user;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.stream.IntStream;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -53,19 +54,22 @@ public class ProfileServiceApplication implements CommandLineRunner
 	public void run(String... args) throws Exception
 	{
 		log.info("Admin User is Created..");
-		userRepo.save(ProfileE.builder()
-			.id(1L)
-			.firstName("Admin")
-			.lastName("Admin")
-			.email("admin@social.com")
-			.password("admin")
-			.isActive(true)
-			.dob(LocalDate.now())
-			.country(Country.INDIA)
-			.gender(Gender.NOT_INTERESTED_TO_MENTION)
-			.createDateTime(LocalDateTime.now())
-			.modifiedDateTime(LocalDateTime.now())
-			.build());
+
+		IntStream.iterate(1, n -> n + 1).limit(100).forEach(k -> {
+			userRepo.save(ProfileE.builder()
+				.id(Long.valueOf(k))
+				.firstName("First Name - " + k)
+				.lastName("Last Name - " + k)
+				.email(k + "@social.com")
+				.password("password-" + k)
+				.isActive(true)
+				.dob(LocalDate.now())
+				.country(Country.INDIA)
+				.gender(Gender.NOT_INTERESTED_TO_MENTION)
+				.createDateTime(LocalDateTime.now())
+				.modifiedDateTime(LocalDateTime.now())
+				.build());
+		});
 
 	}
 }

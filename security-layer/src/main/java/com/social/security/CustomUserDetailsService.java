@@ -46,6 +46,7 @@ public class CustomUserDetailsService implements UserDetailsService
 		{
 			request.setAttribute("CurrentUser", currentUser.get());
 			Profile user = currentUser.get();
+
 			return UserPrincipal.create(user);
 		}
 		throw new UsernameNotFoundException("User not found with username :-" + username);

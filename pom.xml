@@ -7,7 +7,6 @@
         <artifactId>spring-boot-dependencies</artifactId>
         <groupId>org.springframework.boot</groupId>
         <version>3.2.2</version>
-        <relativePath>./</relativePath>
     </parent>
 
     <groupId>com.social</groupId>

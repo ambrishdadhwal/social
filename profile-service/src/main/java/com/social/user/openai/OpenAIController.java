@@ -50,7 +50,7 @@ public class OpenAIController
 		var openAiApi = new OpenAiApi(baseURL, openaiApiKey);
 		var openAiChatOptions = OpenAiChatOptions.builder()
 			.withModel(chatModelV)
-			.withTemperature(0.4f)
+			.withTemperature(0.4d)
 			.withMaxTokens(200)
 			.build();
 

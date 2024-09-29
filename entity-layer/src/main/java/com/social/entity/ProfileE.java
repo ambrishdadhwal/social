@@ -69,7 +69,7 @@ public class ProfileE
 	@JoinColumn(name = "social_user_id", referencedColumnName = "id")
 	private Set<ProfileImageE> profileImages;
 
-	@Column
+	@Column(name = "isActive", columnDefinition = "boolean default false")
 	private Boolean isActive;
 
 	@Column
@@ -83,9 +83,9 @@ public class ProfileE
 	@Column
 	private LocalDate dob;
 
-	//after
-//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
-	//before
+	// after
+	// @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+	// before
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_a_id", referencedColumnName = "id")
 	private Set<ProfileRoleE> userRoles;

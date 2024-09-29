@@ -5,6 +5,8 @@ import static com.social.user.utils.ProfileUtils.addLinkToUser;
 import java.util.List;
 import java.util.Optional;
 
+import com.social.security.jwt.RequestContext;
+import com.social.security.jwt.RequestContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,6 +41,8 @@ public class UserController
 
 	private final IUserService userService;
 
+	private final RequestContextHolder requestContextHolder;
+
 	@GetMapping(value = "/", consumes = "application/json", produces = "application/json")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public CommonResponse<List<ProfileDTO>> getUsers(@RequestParam(name = "pageNumber") Integer pageNumber,
@@ -50,6 +54,7 @@ public class UserController
 		CommonResponse<List<ProfileDTO>> dto = new CommonResponse<>();
 		dto.setData(response);
 		dto.setStatus(HttpStatus.OK);
+		System.out.println("----->>>>>>" + requestContextHolder.getContext().getEmail());
 		return dto;
 	}
 
