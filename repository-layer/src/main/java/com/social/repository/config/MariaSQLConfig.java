@@ -28,7 +28,7 @@ public class MariaSQLConfig extends AbstractJdbcConfiguration
 	private final Environment environment;
 
 	@Bean("mariaDS")
-	public DataSource postgreDS() throws IllegalAccessException
+	public DataSource mariaDS() throws IllegalAccessException
 	{
 		List<DataSourceProps> dbConns = Binder.get(environment).bind("social.database", Bindable.listOf(DataSourceProps.class))
 			.orElseThrow(IllegalAccessException::new);
@@ -42,15 +42,15 @@ public class MariaSQLConfig extends AbstractJdbcConfiguration
 	}
 
 	@Bean("mariaSQLnamedJdbcOperations")
-	NamedParameterJdbcOperations namedJdbcOperations(DataSource postgreDS)
+	NamedParameterJdbcOperations namedJdbcOperations(DataSource mariaDS)
 	{
-		return new NamedParameterJdbcTemplate(postgreDS);
+		return new NamedParameterJdbcTemplate(mariaDS);
 	}
 
 	@Bean("mariaSQLjdbcOperations")
-	JdbcOperations jdbcOperations(DataSource postgreDS)
+	JdbcOperations jdbcOperations(DataSource mariaDS)
 	{
-		return new JdbcTemplate(postgreDS);
+		return new JdbcTemplate(mariaDS);
 	}
 
 }

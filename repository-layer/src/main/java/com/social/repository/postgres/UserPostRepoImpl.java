@@ -12,7 +12,7 @@ import jakarta.persistence.Query;
 public class UserPostRepoImpl
 {
 
-	@Autowired
+	@Autowired(required = false)
 	EntityManager entityManager;
 
 	public UserPostE getUserByIdWithNamedQuery(Long id)
